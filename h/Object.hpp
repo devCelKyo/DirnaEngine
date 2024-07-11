@@ -5,17 +5,18 @@
 class Object
 {
 public:
-	Object(int x, int y, int width, int height, double mass);
+   Object(int x, int y, int width, int height, double mass);
 
-	SDL_Rect* getView();
+   SDL_Rect* getView();
 
-	double mass;
-	
-	int x;
-	int y;
-	int width;
-	int height;
+   double mass;
+
+   int x;
+   int y;
+   int width;
+   int height;
 
 private:
-	SDL_Rect view;
+   void updateView();
+   SDL_Rect view;
 };
