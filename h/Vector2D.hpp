@@ -15,15 +15,15 @@ public:
    friend Vector2D operator*(const Vector2D& lhs, const double rhs);
    friend Vector2D operator*(const double lhs, const Vector2D& rhs);
 
-private:
+public:
    double x;
    double y;
 };
 
-Vector2D::Vector2D(double x, double y) : x{x}, y{y}
+inline Vector2D::Vector2D(double x, double y) : x{x}, y{y}
 {}
 
-double Vector2D::getNorm()
+inline double Vector2D::getNorm()
 {
    return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
 }

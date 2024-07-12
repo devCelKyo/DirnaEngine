@@ -24,6 +24,7 @@ int main(int argc, char* args[])
    world.setWidth(SCREEN_WIDTH).setHeight(SCREEN_HEIGHT).setFrameRate(frameRate);
 
    Object o{200, 200, 30, 30, 5};
+   o.speed = Vector2D{ 50, -25 };
 
    world.addObject(o);
    world.start();

@@ -1,20 +1,27 @@
 #pragma once
 
 #include <SDL_rect.h>
+#include <Vector2D.hpp>
 
 class Object
 {
 public:
-   Object(int x, int y, int width, int height, double mass);
+   Object(double x, double y, double width, double height, double mass);
 
    SDL_Rect* getView();
 
+   void move(Vector2D shift);
+   void applySpeed(Uint32 time); 
+   
+public:
    double mass;
+   double x;
+   double y;
+   double width;
+   double height;
 
-   int x;
-   int y;
-   int width;
-   int height;
+   // vector in pixel/s
+   Vector2D speed;
 
 private:
    void updateView();

@@ -43,9 +43,7 @@ void World::start()
       {
          clear(renderer);
          drawObject(renderer, obj);
-         obj.x += 1;
-         if (obj.x > width)
-            obj.x = 0;
+         obj.applySpeed(frameTimeInterval);
          SDL_Delay(frameTimeInterval);
       }
    }
