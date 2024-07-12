@@ -6,6 +6,7 @@ constexpr int SCREEN_HEIGHT = 480;
 
 constexpr int frameRate = 160; // fps
 constexpr double frameTimeInterval = 1000 * (1. / frameRate); // in milliseconds
+constexpr Uint32 frameTimeIntervalMS = static_cast<Uint32>(frameTimeInterval);
 
 static void keepWindow()
 {
@@ -40,7 +41,7 @@ int main(int argc, char* args[])
 	  rect.x += 5;
 	  if (rect.x > SCREEN_WIDTH)
 		 rect.x = 0;
-	  SDL_Delay(frameTimeInterval);
+	  SDL_Delay(frameTimeIntervalMS);
    }
    keepWindow();
 
