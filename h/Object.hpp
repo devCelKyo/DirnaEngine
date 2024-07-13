@@ -14,6 +14,9 @@ public:
 
    void move(Vector2D shift);
    void applySpeed(Uint32 time); 
+
+   void setFixed(bool val);
+   bool isFixed() const;
    
 public:
    double mass;
@@ -21,6 +24,8 @@ public:
    double y;
    double width;
    double height;
+
+   bool fixed{false};
 
    // vector in pixel/s
    Vector2D speed;

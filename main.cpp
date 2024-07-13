@@ -27,11 +27,14 @@ int main(int argc, char* args[])
    Rectangle rect{200, 200, 30, 30, 5};
    rect.speed = Vector2D{ 50, 25 };
 
-   Circle circle{ 300, 300, 75, 5 };
+   Circle circle{ 300, 300, 20, 5 };
    circle.speed = Vector2D{ -30, -10 };
+
+   Rectangle fixed{ 320, 440, 500, 30, 5 };
 
    world.addObject(&rect);
    world.addObject(&circle);
+   world.addObject(&fixed);
    world.start();
 
    keepWindow();

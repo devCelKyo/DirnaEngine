@@ -21,10 +21,17 @@ void Object::move(Vector2D shift)
 
 void Object::applySpeed(Uint32 time)
 {
+   if (isFixed())
+      return;
+
    double ratio = time / 1000.;
    Vector2D shift{ speed.x * ratio, speed.y * ratio };
    move(shift);
 }
+
+void Object::setFixed(bool val) { fixed = val; }
+
+bool Object::isFixed() const { return fixed; }
 
 void Object::updateHandle()
 {
@@ -93,7 +100,6 @@ void Circle::fillTexture(SDL_Renderer* renderer)
          }
       }
    }
-
    SDL_SetRenderTarget(renderer, nullptr);
 }
 
