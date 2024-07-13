@@ -59,11 +59,46 @@ Circle::Circle(double x, double y, double radius, double mass)
 {
 }
 
+static void drawPointCircleFourSymmetry(SDL_Renderer* renderer, double radius, int x, int y)
+{
+   SDL_RenderDrawPoint(renderer, x, y);
+   SDL_RenderDrawPoint(renderer, 2 * radius - x, y);
+   SDL_RenderDrawPoint(renderer, 2 * radius - x, 2 * radius - y);
+   SDL_RenderDrawPoint(renderer, x, 2 * radius - y);
+}
 
 void Circle::fillTexture(SDL_Renderer* renderer)
 {
+   SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
    SDL_SetRenderTarget(renderer, texture);
-   SDL_RenderFillRect(renderer, nullptr);
+
+   Uint8 r; Uint8 g; Uint8 b; Uint8 a;
+   SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+   SDL_RenderClear(renderer);
+   SDL_SetRenderDrawColor(renderer, r, g, b, a);
+   
+   const double radius = getRadius();
+   const double squaredRadius = radius * radius;
+   for (int i = 0; i <= radius; ++i)
+   {
+      for (int j = 0; j <= radius; ++j)
+      {
+         int distX2 = std::pow(radius - i, 2);
+         int distY2 = std::pow(radius - j, 2);
+         if (distX2 + distY2 <= squaredRadius)
+         {
+            drawPointCircleFourSymmetry(renderer, radius, i, j);
+         }
+      }
+   }
+
    SDL_SetRenderTarget(renderer, nullptr);
 }
+
+double Circle::getRadius() const
+{
+   return width / 2.;
+}
+

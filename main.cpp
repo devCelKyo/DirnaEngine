@@ -6,7 +6,7 @@
 constexpr int SCREEN_WIDTH = 640;
 constexpr int SCREEN_HEIGHT = 480;
 
-constexpr int frameRate = 165; // fps
+constexpr int frameRate = 30; // fps
 
 static void keepWindow()
 {
@@ -24,10 +24,14 @@ int main(int argc, char* args[])
    World world(r);
    world.setWidth(SCREEN_WIDTH).setHeight(SCREEN_HEIGHT).setFrameRate(frameRate);
 
-   Rectangle o{200, 200, 30, 30, 5};
-   o.speed = Vector2D{ 50, 25 };
+   Rectangle rect{200, 200, 30, 30, 5};
+   rect.speed = Vector2D{ 50, 25 };
 
-   world.addObject(&o);
+   Circle circle{ 300, 300, 75, 5 };
+   circle.speed = Vector2D{ -30, -10 };
+
+   world.addObject(&rect);
+   world.addObject(&circle);
    world.start();
 
    keepWindow();

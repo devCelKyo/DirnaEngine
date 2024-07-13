@@ -48,4 +48,5 @@ public:
    Circle(double x, double y, double radius, double mass);
 
    void fillTexture(SDL_Renderer*) override;
+   double getRadius() const;
 };

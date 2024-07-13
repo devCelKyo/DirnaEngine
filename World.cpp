@@ -12,7 +12,6 @@ static void clear(SDL_Renderer* renderer)
 static void drawObject(SDL_Renderer* renderer, Object* object)
 {
    SDL_RenderCopy(renderer, object->texture, nullptr, object->getTextureHandle());
-   SDL_RenderPresent(renderer);
 }
 
 World::World(SDL_Renderer* r) : renderer{r}
@@ -39,12 +38,13 @@ void World::start()
 {  
    while (true)
    {
+      clear(renderer);
       for (auto* obj : objects)
       {
-         clear(renderer);
          drawObject(renderer, obj);
          obj->applySpeed(frameTimeInterval);
-         SDL_Delay(frameTimeInterval);
       }
+      SDL_Delay(frameTimeInterval);
+      SDL_RenderPresent(renderer);
    }
 }
