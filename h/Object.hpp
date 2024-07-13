@@ -1,14 +1,16 @@
 #pragma once
 
-#include <SDL_rect.h>
+#include <SDL.h>
 #include <Vector2D.hpp>
 
 class Object
 {
 public:
    Object(double x, double y, double width, double height, double mass);
+   ~Object();
 
-   SDL_Rect* getView();
+   void fillTexture(SDL_Renderer*);
+   SDL_Rect* getTextureHandle(bool update = true);
 
    void move(Vector2D shift);
    void applySpeed(Uint32 time); 
@@ -23,7 +25,9 @@ public:
    // vector in pixel/s
    Vector2D speed;
 
+   SDL_Texture* texture = nullptr;
 private:
-   void updateView();
-   SDL_Rect view;
+   void updateHandle();
+
+   SDL_Rect textureHandle;
 };

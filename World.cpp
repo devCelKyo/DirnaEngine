@@ -11,10 +11,7 @@ static void clear(SDL_Renderer* renderer)
 
 static void drawObject(SDL_Renderer* renderer, Object& object)
 {
-   auto* view = object.getView();
-   
-   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-   SDL_RenderFillRect(renderer, view);
+   SDL_RenderCopy(renderer, object.texture, nullptr, object.getTextureHandle());
    SDL_RenderPresent(renderer);
 }
 
@@ -32,11 +29,14 @@ World& World::setFrameRate(int val)
 
 void World::addObject(Object object)
 {
+   SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, static_cast<int>(object.width), static_cast<int>(object.height));
+   object.texture = texture;
+   object.fillTexture(renderer);
    objects.push_back(object);
 }
 
 void World::start()
-{
+{  
    while (true)
    {
       for (auto& obj : objects)
