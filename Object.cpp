@@ -1,4 +1,5 @@
 #include <Object.hpp>
+#include <Units.hpp>
 
 Object::Object(double x, double y, double width, double height, double mass) :
    x{ x }, y{ y }, width{ width }, height{ height }, mass{ mass }, speed{Vector2D{0,0}}
@@ -25,7 +26,7 @@ void Object::applySpeed(Uint32 time)
       return;
 
    double ratio = time / 1000.;
-   Vector2D shift{ speed.x * ratio, speed.y * ratio };
+   Vector2D shift{ metersToPixels(speed.x) * ratio, metersToPixels(speed.y) * ratio };
    move(shift);
 }
 
@@ -68,10 +69,11 @@ Circle::Circle(double x, double y, double radius, double mass)
 
 static void drawPointCircleFourSymmetry(SDL_Renderer* renderer, double radius, int x, int y)
 {
+   int twoRadius = static_cast<int>(2 * radius);
    SDL_RenderDrawPoint(renderer, x, y);
-   SDL_RenderDrawPoint(renderer, 2 * radius - x, y);
-   SDL_RenderDrawPoint(renderer, 2 * radius - x, 2 * radius - y);
-   SDL_RenderDrawPoint(renderer, x, 2 * radius - y);
+   SDL_RenderDrawPoint(renderer, twoRadius - x, y);
+   SDL_RenderDrawPoint(renderer, twoRadius - x, twoRadius - y);
+   SDL_RenderDrawPoint(renderer, x, twoRadius - y);
 }
 
 void Circle::fillTexture(SDL_Renderer* renderer)
@@ -92,8 +94,8 @@ void Circle::fillTexture(SDL_Renderer* renderer)
    {
       for (int j = 0; j <= radius; ++j)
       {
-         int distX2 = std::pow(radius - i, 2);
-         int distY2 = std::pow(radius - j, 2);
+         int distX2 = static_cast<int>(std::pow(radius - i, 2));
+         int distY2 = static_cast<int>(std::pow(radius - j, 2));
          if (distX2 + distY2 <= squaredRadius)
          {
             drawPointCircleFourSymmetry(renderer, radius, i, j);

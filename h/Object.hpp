@@ -27,7 +27,7 @@ public:
 
    bool fixed{false};
 
-   // vector in pixel/s
+   // vector in meters/s
    Vector2D speed;
 
    SDL_Texture* texture = nullptr;

@@ -25,10 +25,10 @@ int main(int argc, char* args[])
    world.setWidth(SCREEN_WIDTH).setHeight(SCREEN_HEIGHT).setFrameRate(frameRate);
 
    Rectangle rect{200, 200, 30, 30, 5};
-   rect.speed = Vector2D{ 50, 25 };
+   rect.speed = Vector2D{ 2, 1 };
 
    Circle circle{ 300, 300, 20, 5 };
-   circle.speed = Vector2D{ -30, -10 };
+   circle.speed = Vector2D{ -1, -0.5 };
 
    Rectangle fixed{ 320, 440, 500, 30, 5 };
 
