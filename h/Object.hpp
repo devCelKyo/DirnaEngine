@@ -7,9 +7,9 @@ class Object
 {
 public:
    Object(double x, double y, double width, double height, double mass);
-   ~Object();
+   virtual ~Object();
 
-   void fillTexture(SDL_Renderer*);
+   virtual void fillTexture(SDL_Renderer*);
    SDL_Rect* getTextureHandle(bool update = true);
 
    void move(Vector2D shift);
@@ -30,4 +30,16 @@ private:
    void updateHandle();
 
    SDL_Rect textureHandle;
+};
+
+class Rectangle : public Object
+{
+public:
+   void fillTexture(SDL_Renderer*) override;
+};
+
+class Circle : public Object
+{
+public:
+   void fillTexture(SDL_Renderer*) override;
 };

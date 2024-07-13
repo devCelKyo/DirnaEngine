@@ -3,6 +3,8 @@
 Object::Object(double x, double y, double width, double height, double mass) :
    x{ x }, y{ y }, width{ width }, height{ height }, mass{ mass }, speed{Vector2D{0,0}}
 {
+   textureHandle.w = static_cast<int>(width);
+   textureHandle.h = static_cast<int>(height);
    updateHandle();
 }
 
@@ -36,10 +38,8 @@ void Object::applySpeed(Uint32 time)
 
 void Object::updateHandle()
 {
-   textureHandle.x = static_cast<int>(x);
-   textureHandle.y = static_cast<int>(y);
-   textureHandle.w = static_cast<int>(width);
-   textureHandle.h = static_cast<int>(height);
+   textureHandle.x = static_cast<int>(x - width / 2.);
+   textureHandle.y = static_cast<int>(y - height / 2.);
 }
 
 SDL_Rect* Object::getTextureHandle(bool update)
