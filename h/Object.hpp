@@ -9,7 +9,7 @@ public:
    Object(double x, double y, double width, double height, double mass);
    virtual ~Object();
 
-   virtual void fillTexture(SDL_Renderer*);
+   virtual void fillTexture(SDL_Renderer*) = 0;
    SDL_Rect* getTextureHandle(bool update = true);
 
    void move(Vector2D shift);
@@ -34,12 +34,18 @@ private:
 
 class Rectangle : public Object
 {
+   using Base = Object;
 public:
+   Rectangle(double x, double y, double width, double height, double mass);
+
    void fillTexture(SDL_Renderer*) override;
 };
 
 class Circle : public Object
 {
+   using Base = Object;
 public:
+   Circle(double x, double y, double radius, double mass);
+
    void fillTexture(SDL_Renderer*) override;
 };

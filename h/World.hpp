@@ -13,11 +13,11 @@ public:
    World& setHeight(int val);
    World& setFrameRate(int val);
 
-   void addObject(Object);
+   void addObject(Object*);
    void start();
 
 private:
-   std::vector<Object> objects;
+   std::vector<Object*> objects;
    SDL_Renderer* renderer;
 
    int width{};

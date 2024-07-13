@@ -10,17 +10,7 @@ Object::Object(double x, double y, double width, double height, double mass) :
 
 Object::~Object()
 {
-   //SDL_DestroyTexture(texture);
-   // let's figure out proper ownership first
-}
-
-
-void Object::fillTexture(SDL_Renderer* renderer)
-{
-   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-   SDL_SetRenderTarget(renderer, texture);
-   SDL_RenderFillRect(renderer, nullptr);
-   SDL_SetRenderTarget(renderer, nullptr);
+   SDL_DestroyTexture(texture);
 }
 
 void Object::move(Vector2D shift)
@@ -49,4 +39,31 @@ SDL_Rect* Object::getTextureHandle(bool update)
       updateHandle();
    }
    return &textureHandle;
+}
+
+Rectangle::Rectangle(double x, double y, double width, double height, double mass)
+   : Base(x, y, width, height, mass)
+{
+}
+
+void Rectangle::fillTexture(SDL_Renderer* renderer)
+{
+   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+   SDL_SetRenderTarget(renderer, texture);
+   SDL_RenderFillRect(renderer, nullptr);
+   SDL_SetRenderTarget(renderer, nullptr);
+}
+
+Circle::Circle(double x, double y, double radius, double mass)
+   : Base(x, y, radius * 2, radius * 2, mass)
+{
+}
+
+
+void Circle::fillTexture(SDL_Renderer* renderer)
+{
+   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+   SDL_SetRenderTarget(renderer, texture);
+   SDL_RenderFillRect(renderer, nullptr);
+   SDL_SetRenderTarget(renderer, nullptr);
 }

@@ -9,9 +9,9 @@ static void clear(SDL_Renderer* renderer)
    SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
-static void drawObject(SDL_Renderer* renderer, Object& object)
+static void drawObject(SDL_Renderer* renderer, Object* object)
 {
-   SDL_RenderCopy(renderer, object.texture, nullptr, object.getTextureHandle());
+   SDL_RenderCopy(renderer, object->texture, nullptr, object->getTextureHandle());
    SDL_RenderPresent(renderer);
 }
 
@@ -27,11 +27,11 @@ World& World::setFrameRate(int val)
    return *this;
 }
 
-void World::addObject(Object object)
+void World::addObject(Object* object)
 {
-   SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, static_cast<int>(object.width), static_cast<int>(object.height));
-   object.texture = texture;
-   object.fillTexture(renderer);
+   SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, static_cast<int>(object->width), static_cast<int>(object->height));
+   object->texture = texture;
+   object->fillTexture(renderer);
    objects.push_back(object);
 }
 
@@ -39,11 +39,11 @@ void World::start()
 {  
    while (true)
    {
-      for (auto& obj : objects)
+      for (auto* obj : objects)
       {
          clear(renderer);
          drawObject(renderer, obj);
-         obj.applySpeed(frameTimeInterval);
+         obj->applySpeed(frameTimeInterval);
          SDL_Delay(frameTimeInterval);
       }
    }

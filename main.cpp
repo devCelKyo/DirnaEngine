@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <World.hpp>
 #include <Object.hpp>
+#include <memory>
 
 constexpr int SCREEN_WIDTH = 640;
 constexpr int SCREEN_HEIGHT = 480;
@@ -23,10 +24,10 @@ int main(int argc, char* args[])
    World world(r);
    world.setWidth(SCREEN_WIDTH).setHeight(SCREEN_HEIGHT).setFrameRate(frameRate);
 
-   Object o{200, 200, 30, 30, 5};
-   o.speed = Vector2D{ 50, -25 };
+   Rectangle o{200, 200, 30, 30, 5};
+   o.speed = Vector2D{ 50, 25 };
 
-   world.addObject(o);
+   world.addObject(&o);
    world.start();
 
    keepWindow();
