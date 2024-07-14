@@ -6,7 +6,7 @@
 constexpr int SCREEN_WIDTH = 640;
 constexpr int SCREEN_HEIGHT = 480;
 
-constexpr int frameRate = 30; // fps
+constexpr int frameRate = 165; // fps
 
 static void keepWindow()
 {
@@ -33,6 +33,7 @@ int main(int argc, char* args[])
 
    Rectangle fixed{ 320, 440, 500, 30, 5 };
    fixed.setFixed(true);
+   fixed.color = Color::Black;
 
    world.addObject(&rect);
    world.addObject(&circle);

@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <Vector2D.hpp>
+#include <Colors.hpp>
 
 class Object
 {
@@ -27,6 +28,9 @@ public:
    double height;
 
    bool fixed{false};
+
+   // should be set before filling texture for now
+   Color color;
 
    // vector in meters/s
    Vector2D speed;

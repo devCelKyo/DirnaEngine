@@ -2,7 +2,7 @@
 #include <Units.hpp>
 
 Object::Object(double x, double y, double width, double height, double mass) :
-   x{ x }, y{ y }, width{ width }, height{ height }, mass{ mass }
+   x{ x }, y{ y }, width{ width }, height{ height }, mass{ mass }, color{Color::Red}
 {
    textureHandle.w = static_cast<int>(width);
    textureHandle.h = static_cast<int>(height);
@@ -64,7 +64,8 @@ Rectangle::Rectangle(double x, double y, double width, double height, double mas
 
 void Rectangle::fillTexture(SDL_Renderer* renderer)
 {
-   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+   auto colorStruct = getColor(color);
+   SDL_SetRenderDrawColor(renderer, colorStruct.r, colorStruct.g, colorStruct.b, colorStruct.a);
    SDL_SetRenderTarget(renderer, texture);
    SDL_RenderFillRect(renderer, nullptr);
    SDL_SetRenderTarget(renderer, nullptr);
