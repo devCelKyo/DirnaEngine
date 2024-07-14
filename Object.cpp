@@ -34,7 +34,7 @@ void Object::applyAcceleration(Uint32 time)
    if (isFixed())
       return;
 
-   auto shift = metersToPixels(acceleration) * (time / 1000.);
+   auto shift = acceleration * (time / 1000.);
    speed += shift;
 }
 
