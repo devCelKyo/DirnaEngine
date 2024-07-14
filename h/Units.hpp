@@ -3,14 +3,27 @@
 constexpr double pixelsByMeter = 25;
 
 double pixelsToMeters(int pixels);
-int metersToPixels(double meters);
+double metersToPixels(double meters);
+
+Vector2D pixelsToMeters(Vector2D pixels);
+Vector2D metersToPixels(Vector2D meters);
 
 inline double pixelsToMeters(int pixels)
 {
    return pixels / pixelsByMeter;
 }
 
-inline int metersToPixels(double meters)
+inline double metersToPixels(double meters)
 {
-   return static_cast<int>(meters * pixelsByMeter);
+   return meters * pixelsByMeter;
+}
+
+inline Vector2D pixelsToMeters(Vector2D pixels)
+{
+   return pixels * (1 / pixelsByMeter);
+}
+
+inline Vector2D metersToPixels(Vector2D meters)
+{
+   return meters * pixelsByMeter;
 }

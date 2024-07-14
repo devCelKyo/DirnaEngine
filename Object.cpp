@@ -2,7 +2,7 @@
 #include <Units.hpp>
 
 Object::Object(double x, double y, double width, double height, double mass) :
-   x{ x }, y{ y }, width{ width }, height{ height }, mass{ mass }, speed{Vector2D{0,0}}
+   x{ x }, y{ y }, width{ width }, height{ height }, mass{ mass }
 {
    textureHandle.w = static_cast<int>(width);
    textureHandle.h = static_cast<int>(height);
@@ -25,9 +25,17 @@ void Object::applySpeed(Uint32 time)
    if (isFixed())
       return;
 
-   double ratio = time / 1000.;
-   Vector2D shift{ metersToPixels(speed.x) * ratio, metersToPixels(speed.y) * ratio };
+   auto shift = metersToPixels(speed) * (time / 1000.);
    move(shift);
+}
+
+void Object::applyAcceleration(Uint32 time)
+{
+   if (isFixed())
+      return;
+
+   auto shift = metersToPixels(acceleration) * (time / 1000.);
+   speed += shift;
 }
 
 void Object::setFixed(bool val) { fixed = val; }

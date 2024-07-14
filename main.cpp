@@ -22,7 +22,8 @@ int main(int argc, char* args[])
    SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &w, &r);
 
    World world(r);
-   world.setWidth(SCREEN_WIDTH).setHeight(SCREEN_HEIGHT).setFrameRate(frameRate);
+   world.setWidth(SCREEN_WIDTH).setHeight(SCREEN_HEIGHT).setFrameRate(frameRate)
+        .setGravity(9.79);
 
    Rectangle rect{200, 200, 30, 30, 5};
    rect.speed = Vector2D{ 2, 1 };
@@ -31,6 +32,7 @@ int main(int argc, char* args[])
    circle.speed = Vector2D{ -1, -0.5 };
 
    Rectangle fixed{ 320, 440, 500, 30, 5 };
+   fixed.setFixed(true);
 
    world.addObject(&rect);
    world.addObject(&circle);

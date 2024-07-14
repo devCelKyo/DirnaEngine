@@ -14,6 +14,7 @@ public:
 
    void move(Vector2D shift);
    void applySpeed(Uint32 time); 
+   void applyAcceleration(Uint32 time); 
 
    void setFixed(bool val);
    bool isFixed() const;
@@ -29,6 +30,8 @@ public:
 
    // vector in meters/s
    Vector2D speed;
+   // vector in meters/s-2
+   Vector2D acceleration;
 
    SDL_Texture* texture = nullptr;
 private:

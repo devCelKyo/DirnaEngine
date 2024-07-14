@@ -5,6 +5,7 @@
 class Vector2D
 {
 public:
+   Vector2D();
    Vector2D(double x, double y);
 
    double getNorm();
@@ -15,10 +16,15 @@ public:
    friend Vector2D operator*(const Vector2D& lhs, const double rhs);
    friend Vector2D operator*(const double lhs, const Vector2D& rhs);
 
+   friend Vector2D& operator+=(Vector2D& lhs, const Vector2D& rhs);
+
 public:
    double x;
    double y;
 };
+
+inline Vector2D::Vector2D() : x{0}, y{0}
+{}
 
 inline Vector2D::Vector2D(double x, double y) : x{x}, y{y}
 {}
@@ -31,6 +37,12 @@ inline double Vector2D::getNorm()
 inline Vector2D operator+(const Vector2D& lhs, const Vector2D& rhs)
 {
    return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y);
+}
+
+inline Vector2D& operator+=(Vector2D& lhs, const Vector2D& rhs)
+{
+   lhs = lhs + rhs;
+   return lhs;
 }
 
 inline Vector2D operator-(const Vector2D& lhs, const Vector2D& rhs)
