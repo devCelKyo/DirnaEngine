@@ -1,13 +1,9 @@
 #include <Object.hpp>
 #include <Units.hpp>
 
-Object::Object(double x, double y, double width, double height, double mass) :
-   x{ x }, y{ y }, width{ width }, height{ height }, mass{ mass }, color{Color::Red}
-{
-   textureHandle.w = static_cast<int>(width);
-   textureHandle.h = static_cast<int>(height);
-   updateHandle();
-}
+Object::Object(double x, double y, double mass) :
+   x{ x }, y{ y }, mass{ mass }, color{Color::Red}
+{}
 
 Object::~Object()
 {
@@ -44,8 +40,8 @@ bool Object::isFixed() const { return fixed; }
 
 void Object::updateHandle()
 {
-   textureHandle.x = static_cast<int>(x - width / 2.);
-   textureHandle.y = static_cast<int>(y - height / 2.);
+   textureHandle.x = static_cast<int>(x - getTextureWidth() / 2.);
+   textureHandle.y = static_cast<int>(y - getTextureHeight() / 2.);
 }
 
 SDL_Rect* Object::getTextureHandle(bool update)
@@ -58,8 +54,11 @@ SDL_Rect* Object::getTextureHandle(bool update)
 }
 
 Rectangle::Rectangle(double x, double y, double width, double height, double mass)
-   : Base(x, y, width, height, mass)
+   : Base(x, y, mass), width{width}, height{height}
 {
+   textureHandle.w = getTextureWidth();
+   textureHandle.h = getTextureHeight();
+   updateHandle();
 }
 
 void Rectangle::fillTexture(SDL_Renderer* renderer)
@@ -71,9 +70,22 @@ void Rectangle::fillTexture(SDL_Renderer* renderer)
    SDL_SetRenderTarget(renderer, nullptr);
 }
 
-Circle::Circle(double x, double y, double radius, double mass)
-   : Base(x, y, radius * 2, radius * 2, mass)
+int Rectangle::getTextureWidth() const
 {
+   return static_cast<int>(width);
+}
+
+int Rectangle::getTextureHeight() const
+{
+   return static_cast<int>(height);
+}
+
+Circle::Circle(double x, double y, double radius, double mass)
+   : Base(x, y, mass), radius{ radius }
+{
+   textureHandle.w = getTextureWidth();
+   textureHandle.h = getTextureHeight();
+   updateHandle();
 }
 
 static void drawPointCircleFourSymmetry(SDL_Renderer* renderer, double radius, int x, int y)
@@ -97,7 +109,6 @@ void Circle::fillTexture(SDL_Renderer* renderer)
    SDL_RenderClear(renderer);
    SDL_SetRenderDrawColor(renderer, r, g, b, a);
    
-   const double radius = getRadius();
    const double squaredRadius = radius * radius;
    for (int i = 0; i <= radius; ++i)
    {
@@ -114,8 +125,13 @@ void Circle::fillTexture(SDL_Renderer* renderer)
    SDL_SetRenderTarget(renderer, nullptr);
 }
 
-double Circle::getRadius() const
+int Circle::getTextureWidth() const
 {
-   return width / 2.;
+   return static_cast<int>(radius * 2);
+}
+
+int Circle::getTextureHeight() const
+{
+   return static_cast<int>(radius * 2);
 }
 

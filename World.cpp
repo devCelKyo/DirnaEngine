@@ -30,7 +30,7 @@ World& World::setGravity(double val) { gravity = val; return *this; }
 
 void World::addObject(Object* object)
 {
-   SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, static_cast<int>(object->width), static_cast<int>(object->height));
+   SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, object->getTextureWidth(), object->getTextureHeight());
    object->texture = texture;
    object->fillTexture(renderer);
    objects.push_back(object);
