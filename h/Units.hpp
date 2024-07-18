@@ -3,12 +3,19 @@
 constexpr double pixelsByMeter = 25;
 
 double pixelsToMeters(int pixels);
+double pixelsToMeters(double pixels);
+
 double metersToPixels(double meters);
 
 Vector2D pixelsToMeters(Vector2D pixels);
 Vector2D metersToPixels(Vector2D meters);
 
 inline double pixelsToMeters(int pixels)
+{
+   return pixels / pixelsByMeter;
+}
+
+inline double pixelsToMeters(double pixels)
 {
    return pixels / pixelsByMeter;
 }

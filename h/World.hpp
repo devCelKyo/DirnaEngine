@@ -23,6 +23,9 @@ public:
 private:
    void applyForces();
 
+   void checkCollisions();
+   void handleCollision();
+
 private:
    std::vector<Object*> objects;
    SDL_Renderer* renderer;

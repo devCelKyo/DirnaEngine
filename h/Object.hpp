@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <Vector2D.hpp>
 #include <Colors.hpp>
+#include <optional>
 
 #include <Object.fwd.hpp>
 
@@ -24,6 +25,13 @@ public:
 
    void setFixed(bool val);
    bool isFixed() const;
+
+   double getDistance2InMeters(Object* other);
+
+   // Hitbox circle is a Shape-specific circular hitbox used to quickly evaluate if a collision can occur between two objects
+   // Returns squared value to avoid sqrt
+   virtual double getHitboxRadius2() const = 0;
+   bool canCollideWith(Object*);
 
    virtual void collideWith(Object*) = 0;
    virtual void collideWith(Rectangle*) = 0;
@@ -61,6 +69,8 @@ public:
    int getTextureWidth() const override;
    int getTextureHeight() const override;
 
+   double getHitboxRadius2() const override;
+
    void collideWith(Object*) override;
    void collideWith(Rectangle*) override;
    void collideWith(Circle*) override;
@@ -68,6 +78,9 @@ public:
 public:
    double width{};
    double height{};
+
+private:
+   std::optional<double> cachedRadius2;
 };
 
 class Circle : public Object
@@ -80,10 +93,15 @@ public:
    int getTextureWidth() const override;
    int getTextureHeight() const override;
 
+   double getHitboxRadius2() const override;
+
    void collideWith(Object*) override;
    void collideWith(Rectangle*) override;
    void collideWith(Circle*) override;
 
 public:
    double radius{};
+
+private:
+   std::optional<double> cachedRadius2;
 };

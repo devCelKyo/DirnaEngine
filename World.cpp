@@ -48,6 +48,7 @@ void World::start()
          obj->applyAcceleration(frameTimeInterval);
          obj->applySpeed(frameTimeInterval);
       }
+      checkCollisions();
       SDL_Delay(frameTimeInterval);
       SDL_RenderPresent(renderer);
    }
@@ -58,5 +59,22 @@ void World::applyForces()
    for (auto* obj : objects)
    {
       obj->acceleration.y = gravity;
+   }
+}
+
+void World::checkCollisions()
+{
+   size_t n = objects.size();
+   for (int objIndex1 = 0; objIndex1 < n; ++objIndex1)
+   {
+      for (int objIndex2 = objIndex1 + 1; objIndex2 < n; ++objIndex2)
+      {
+         auto* obj1 = objects[objIndex1];
+         auto* obj2 = objects[objIndex2];
+         if (obj1->canCollideWith(obj2))
+         {
+            obj1->collideWith(obj2);
+         }
+      }
    }
 }

@@ -6,7 +6,7 @@
 constexpr int SCREEN_WIDTH = 640;
 constexpr int SCREEN_HEIGHT = 480;
 
-constexpr int frameRate = 165; // fps
+constexpr int frameRate = 5; // fps
 
 static void keepWindow()
 {
@@ -25,19 +25,19 @@ int main(int argc, char* args[])
    world.setWidth(SCREEN_WIDTH).setHeight(SCREEN_HEIGHT).setFrameRate(frameRate)
         .setGravity(9.79);
 
-   Rectangle rect{200, 200, 30, 30, 5};
-   rect.speed = Vector2D{ 3, -5 };
+   //Rectangle rect{200, 200, 30, 30, 5};
+   //rect.speed = Vector2D{ 3, -5 };
 
-   //Circle circle{ 300, 300, 20, 5 };
-   //circle.speed = Vector2D{ -1, -0.5 };
+   Circle circle{ 300, 300, 20, 5 };
+   circle.speed = Vector2D{ -1, -0.5 };
 
-   //Rectangle fixed{ 320, 440, 500, 30, 5 };
-   //fixed.setFixed(true);
-   //fixed.color = Color::Black;
+   Rectangle fixed{ 320, 440, 500, 30, 5 };
+   fixed.setFixed(true);
+   fixed.color = Color::Black;
 
-   world.addObject(&rect);
-   //world.addObject(&circle);
-   //world.addObject(&fixed);
+   //world.addObject(&rect);
+   world.addObject(&circle);
+   world.addObject(&fixed);
    world.start();
 
    keepWindow();
