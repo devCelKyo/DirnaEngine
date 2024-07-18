@@ -23,6 +23,9 @@ public:
    void setFixed(bool val);
    bool isFixed() const;
 
+   virtual void collideWith(Object*) = 0;
+   virtual void collideWith(Rectangle*) = 0;
+   virtual void collideWith(Circle*) = 0;
    
 public:
    double mass;
@@ -56,6 +59,10 @@ public:
    int getTextureWidth() const override;
    int getTextureHeight() const override;
 
+   void collideWith(Object*) override;
+   void collideWith(Rectangle*) override;
+   void collideWith(Circle*) override;
+
 public:
    double width{};
    double height{};
@@ -70,6 +77,10 @@ public:
    void fillTexture(SDL_Renderer*) override;
    int getTextureWidth() const override;
    int getTextureHeight() const override;
+
+   void collideWith(Object*) override;
+   void collideWith(Rectangle*) override;
+   void collideWith(Circle*) override;
 
 public:
    double radius{};

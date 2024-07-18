@@ -80,6 +80,17 @@ int Rectangle::getTextureHeight() const
    return static_cast<int>(height);
 }
 
+void Rectangle::collideWith(Object* object)
+{
+   object->collideWith(this);
+}
+
+void Rectangle::collideWith(Rectangle* rectangle)
+{}
+
+void Rectangle::collideWith(Circle* circle)
+{}
+
 Circle::Circle(double x, double y, double radius, double mass)
    : Base(x, y, mass), radius{ radius }
 {
@@ -135,3 +146,17 @@ int Circle::getTextureHeight() const
    return static_cast<int>(radius * 2);
 }
 
+void Circle::collideWith(Object* object)
+{
+   object->collideWith(this);
+}
+
+void Circle::collideWith(Rectangle* rectangle)
+{
+
+}
+
+void Circle::collideWith(Circle* circle)
+{
+
+}
