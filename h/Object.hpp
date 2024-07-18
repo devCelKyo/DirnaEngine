@@ -4,6 +4,8 @@
 #include <Vector2D.hpp>
 #include <Colors.hpp>
 
+#include <Object.fwd.hpp>
+
 class Object
 {
 public:
