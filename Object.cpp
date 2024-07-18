@@ -1,5 +1,6 @@
 #include <Object.hpp>
 #include <Units.hpp>
+#include <Collisions.hpp>
 
 Object::Object(double x, double y, double mass) :
    x{ x }, y{ y }, mass{ mass }, color{Color::Red}
@@ -80,16 +81,20 @@ int Rectangle::getTextureHeight() const
    return static_cast<int>(height);
 }
 
-void Rectangle::collideWith(Object* object)
+void Rectangle::collideWith(Object* other)
 {
-   object->collideWith(this);
+   other->collideWith(this);
 }
 
-void Rectangle::collideWith(Rectangle* rectangle)
-{}
+void Rectangle::collideWith(Rectangle* other)
+{
+   collisions::collide(this, other);
+}
 
-void Rectangle::collideWith(Circle* circle)
-{}
+void Rectangle::collideWith(Circle* other)
+{
+   collisions::collide(this, other);
+}
 
 Circle::Circle(double x, double y, double radius, double mass)
    : Base(x, y, mass), radius{ radius }
@@ -146,17 +151,17 @@ int Circle::getTextureHeight() const
    return static_cast<int>(radius * 2);
 }
 
-void Circle::collideWith(Object* object)
+void Circle::collideWith(Object* other)
 {
-   object->collideWith(this);
+   other->collideWith(this);
 }
 
-void Circle::collideWith(Rectangle* rectangle)
+void Circle::collideWith(Rectangle* other)
 {
-
+   collisions::collide(other, this);
 }
 
-void Circle::collideWith(Circle* circle)
+void Circle::collideWith(Circle* other)
 {
-
+   collisions::collide(this, other);
 }

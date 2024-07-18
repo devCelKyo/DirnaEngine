@@ -48,7 +48,7 @@ public:
 protected:
    void updateHandle();
 
-   SDL_Rect textureHandle;
+   SDL_Rect textureHandle{};
 };
 
 class Rectangle : public Object
