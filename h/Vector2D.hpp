@@ -74,7 +74,36 @@ inline Vector2D operator*(const double lhs, const Vector2D& rhs)
 
 inline double operator*(const Vector2D& lhs, const Vector2D& rhs)
 {
-   return lhs.x * rhs.x + lhs.y + rhs.y;
+   return lhs.x * rhs.x + lhs.y * rhs.y;
 }
 
+inline double det(const Vector2D& lhs, const Vector2D& rhs)
+{
+   return lhs.x * rhs.y - lhs.y * rhs.x;
+}
 
+inline void applyRotation(Vector2D& vector, double angle)
+{
+   const double cos = std::cos(angle);
+   const double sin = std::sin(angle);
+   const double x = vector.x;
+   const double y = vector.y;
+   vector.x = x * cos - y * sin;
+   vector.y = x * sin + y * cos;
+}
+
+// extremely bad implementation TODO make this better
+inline void reflect(Vector2D& lhs, const Vector2D& rhs)
+{
+   const double dp = lhs * rhs;
+   const double cos = dp / (lhs.getNorm() * rhs.getNorm());
+   double angle = std::acos(cos);
+
+   auto vectCopy = lhs;
+   applyRotation(vectCopy, angle);
+   if (det(vectCopy, rhs) != 0.)
+   {
+      angle = -1 * angle;
+   }
+   applyRotation(lhs, 2 * angle);
+}

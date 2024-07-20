@@ -26,18 +26,22 @@ int main(int argc, char* args[])
    world.setWidth(SCREEN_WIDTH).setHeight(SCREEN_HEIGHT).setFrameRate(frameRate)
         .setGravity(9.79);
 
-   //Rectangle rect{200, 200, 30, 30, 5};
-   //rect.speed = Vector2D{ 3, -5 };
-
    Circle circle{ 300, 300, 20, 5 };
-   circle.speed = Vector2D{ 0, -5 };
+   circle.speed = Vector2D{ 3, -5 };
+
+   Circle circle2{ 100, 300, 20, 5 };
+   circle2.speed = Vector2D{ 1, -5 };
+
+   Circle circle3{ 200, 300, 20, 5 };
+   circle3.speed = Vector2D{ 2, -5 };
 
    Rectangle fixed{ 320, 440, 500, 30, 5 };
    fixed.setFixed(true);
    fixed.color = Color::Black;
 
-   //world.addObject(&rect);
    world.addObject(&circle);
+   world.addObject(&circle2);
+   world.addObject(&circle3);
    world.addObject(&fixed);
    world.start();
 

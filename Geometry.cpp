@@ -14,9 +14,9 @@ std::array<Segment, 4> getRectangleSides(const Rectangle& rectangle)
    Vector2D heightSideVector(0, rectangle.height);
 
    sides[0] = Segment{ Vector2D(x - halfWidth, y - halfHeight), widthSideVector };
-   sides[1] = Segment{ Vector2D(x + halfWidth, y - halfHeight), -1 * heightSideVector };
+   sides[1] = Segment{ Vector2D(x + halfWidth, y - halfHeight), heightSideVector };
    sides[2] = Segment{ Vector2D(x + halfWidth, y + halfHeight), -1 * widthSideVector };
-   sides[3] = Segment{ Vector2D(x - halfWidth, y + halfHeight), heightSideVector };
+   sides[3] = Segment{ Vector2D(x - halfWidth, y + halfHeight), -1 * heightSideVector };
    return sides;
 }
 

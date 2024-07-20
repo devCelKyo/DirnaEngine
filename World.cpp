@@ -45,8 +45,9 @@ void World::start()
       for (auto* obj : objects)
       {
          drawObject(renderer, obj);
-         obj->applyAcceleration(frameTimeInterval);
-         obj->applySpeed(frameTimeInterval);
+         Uint32 time = frameTimeInterval * 3;
+         obj->applyAcceleration(time);
+         obj->applySpeed(time);
       }
       checkCollisions();
       SDL_Delay(frameTimeInterval);
