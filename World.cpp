@@ -42,15 +42,27 @@ void World::start()
    {
       clear(renderer);
       applyForces();
-
       for (auto* obj : objects)
       {
          drawObject(renderer, obj);
-         Uint32 time = frameTimeInterval;
-         obj->applyAcceleration(time);
-         obj->applySpeed(time);
       }
-      checkCollisions();
+
+      int ticks = 50;
+
+      double timeFactor = 1;
+      double tickTime = frameTimeInterval / (1000 * (double)ticks);
+      tickTime *= timeFactor;
+
+      for (int i = 0; i < ticks; ++i)
+      {
+         for (auto* obj : objects)
+         {
+            obj->applyAcceleration(tickTime);
+            obj->applySpeed(tickTime);
+         }
+         checkCollisions();
+      }
+
       SDL_Delay(frameTimeInterval);
       SDL_RenderPresent(renderer);
    }

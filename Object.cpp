@@ -17,21 +17,21 @@ void Object::move(Vector2D shift)
    y += shift.y;
 }
 
-void Object::applySpeed(Uint32 time)
+void Object::applySpeed(double time)
 {
    if (isFixed())
       return;
 
-   auto shift = speed * (time / 1000.);
+   auto shift = speed * time;
    move(shift);
 }
 
-void Object::applyAcceleration(Uint32 time)
+void Object::applyAcceleration(double time)
 {
    if (isFixed())
       return;
 
-   auto shift = acceleration * (time / 1000.);
+   auto shift = acceleration * time;
    speed += shift;
 }
 
@@ -136,7 +136,8 @@ static void drawPointCircleFourSymmetry(SDL_Renderer* renderer, double radius, i
 void Circle::fillTexture(SDL_Renderer* renderer)
 {
    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+   auto colorStruct = getColor(color);
+   SDL_SetRenderDrawColor(renderer, colorStruct.r, colorStruct.g, colorStruct.b, colorStruct.a);
    SDL_SetRenderTarget(renderer, texture);
 
    Uint8 r; Uint8 g; Uint8 b; Uint8 a;

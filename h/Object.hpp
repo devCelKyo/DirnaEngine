@@ -20,8 +20,8 @@ public:
    virtual int getTextureHeight() const = 0;
 
    void move(Vector2D shift);
-   void applySpeed(Uint32 time); 
-   void applyAcceleration(Uint32 time); 
+   void applySpeed(double time); 
+   void applyAcceleration(double time); 
 
    void setFixed(bool val);
    bool isFixed() const;
