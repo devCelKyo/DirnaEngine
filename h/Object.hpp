@@ -39,8 +39,8 @@ public:
    
 public:
    double mass;
-   double x;
-   double y;
+   double x; // in meters
+   double y; // in meters
 
    bool fixed{false};
 
@@ -76,11 +76,8 @@ public:
    void collideWith(Circle*) override;
 
 public:
-   double width{};
-   double height{};
-
-private:
-   std::optional<double> cachedRadius2;
+   double width{}; // in meters
+   double height{}; // in meters
 };
 
 class Circle : public Object
@@ -100,8 +97,5 @@ public:
    void collideWith(Circle*) override;
 
 public:
-   double radius{};
-
-private:
-   std::optional<double> cachedRadius2;
+   double radius{}; // in meters
 };

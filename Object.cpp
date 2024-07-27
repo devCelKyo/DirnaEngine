@@ -22,7 +22,7 @@ void Object::applySpeed(Uint32 time)
    if (isFixed())
       return;
 
-   auto shift = metersToPixels(speed) * (time / 1000.);
+   auto shift = speed * (time / 1000.);
    move(shift);
 }
 
@@ -41,8 +41,8 @@ bool Object::isFixed() const { return fixed; }
 
 double Object::getDistance2InMeters(Object* other)
 {
-   double xDiff = pixelsToMeters(x - other->x);
-   double yDiff = pixelsToMeters(y - other->y);
+   double xDiff = x - other->x;
+   double yDiff = y - other->y;
    return xDiff * xDiff + yDiff * yDiff;
 }
 
@@ -56,8 +56,8 @@ bool Object::canCollideWith(Object* other)
 
 void Object::updateHandle()
 {
-   textureHandle.x = static_cast<int>(x - getTextureWidth() / 2.);
-   textureHandle.y = static_cast<int>(y - getTextureHeight() / 2.);
+   textureHandle.x = metersToPixels(x) - static_cast<int>(getTextureWidth() / 2.);
+   textureHandle.y = metersToPixels(y) - static_cast<int>(getTextureHeight() / 2.);
 }
 
 SDL_Rect* Object::getTextureHandle(bool update)
@@ -88,12 +88,12 @@ void Rectangle::fillTexture(SDL_Renderer* renderer)
 
 int Rectangle::getTextureWidth() const
 {
-   return static_cast<int>(width);
+   return metersToPixels(width);
 }
 
 int Rectangle::getTextureHeight() const
 {
-   return static_cast<int>(height);
+   return metersToPixels(height);
 }
 
 double Rectangle::getHitboxRadius2() const
@@ -145,16 +145,17 @@ void Circle::fillTexture(SDL_Renderer* renderer)
    SDL_RenderClear(renderer);
    SDL_SetRenderDrawColor(renderer, r, g, b, a);
    
-   const double squaredRadius = radius * radius;
-   for (int i = 0; i <= radius; ++i)
+   const double pixelRadius = metersToPixels(radius);
+   const double squaredRadius = pixelRadius * pixelRadius;
+   for (int i = 0; i <= pixelRadius; ++i)
    {
-      for (int j = 0; j <= radius; ++j)
+      for (int j = 0; j <= pixelRadius; ++j)
       {
-         int distX2 = static_cast<int>(std::pow(radius - i, 2));
-         int distY2 = static_cast<int>(std::pow(radius - j, 2));
+         int distX2 = static_cast<int>(std::pow(pixelRadius - i, 2));
+         int distY2 = static_cast<int>(std::pow(pixelRadius - j, 2));
          if (distX2 + distY2 <= squaredRadius)
          {
-            drawPointCircleFourSymmetry(renderer, radius, i, j);
+            drawPointCircleFourSymmetry(renderer, pixelRadius, i, j);
          }
       }
    }
@@ -163,12 +164,12 @@ void Circle::fillTexture(SDL_Renderer* renderer)
 
 int Circle::getTextureWidth() const
 {
-   return static_cast<int>(radius * 2);
+   return metersToPixels(radius * 2);
 }
 
 int Circle::getTextureHeight() const
 {
-   return static_cast<int>(radius * 2);
+   return metersToPixels(radius * 2);
 }
 
 double Circle::getHitboxRadius2() const

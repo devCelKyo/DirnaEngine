@@ -42,10 +42,11 @@ void World::start()
    {
       clear(renderer);
       applyForces();
+
       for (auto* obj : objects)
       {
          drawObject(renderer, obj);
-         Uint32 time = frameTimeInterval * 3;
+         Uint32 time = frameTimeInterval;
          obj->applyAcceleration(time);
          obj->applySpeed(time);
       }
