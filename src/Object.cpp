@@ -1,6 +1,6 @@
-#include <Object.hpp>
-#include <Units.hpp>
-#include <Collisions.hpp>
+#include <engine/Object.hpp>
+#include <physics/Units.hpp>
+#include <physics/Collisions.hpp>
 
 Object::Object(double x, double y, double mass) :
    x{ x }, y{ y }, mass{ mass }, color{Color::Red}

@@ -1,5 +1,5 @@
-#include <Collisions.hpp>
-#include <Geometry.hpp>
+#include <physics/Collisions.hpp>
+#include <math/Geometry.hpp>
 
 namespace collisions {
 
