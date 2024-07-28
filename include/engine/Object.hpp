@@ -1,11 +1,11 @@
 #pragma once
 
 #include <SDL.h>
-#include <Vector2D.hpp>
-#include <Colors.hpp>
+#include <math/Vector2D.hpp>
+#include <misc/Colors.hpp>
 #include <optional>
 
-#include <Object.fwd.hpp>
+#include <engine/Object.fwd.hpp>
 
 class Object
 {

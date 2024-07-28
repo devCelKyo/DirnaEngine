@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Vector2D.hpp>
+#include <math/Vector2D.hpp>
 #include <array>
-#include <Object.hpp>
+#include <engine/Object.hpp>
 
 namespace geometry {
 

@@ -1,6 +1,6 @@
 #include <SDL.h>
-#include <World.hpp>
-#include <Object.hpp>
+#include <engine/World.hpp>
+#include <engine/Object.hpp>
 #include <memory>
 
 constexpr int SCREEN_WIDTH = 640;
