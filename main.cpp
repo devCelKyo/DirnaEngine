@@ -27,10 +27,10 @@ int main(int argc, char* args[])
         .setGravity(9.79);
 
    Circle circle{ 12, 3, 0.3, 5 };
-   circle.speed = Vector2D{ 40, 0 };
+   circle.speed = Vector2D{ 45, 0 };
 
    Circle circle2{ 17, 3, 0.3, 5 };
-   circle2.speed = Vector2D{ 36, -2 };
+   circle2.speed = Vector2D{ 11, -2 };
    circle2.color = Color::Blue;
 
    Rectangle fixed{ 13, 15, 20, 1.5, 5 };
@@ -45,12 +45,32 @@ int main(int argc, char* args[])
    fixed3.setFixed(true);
    fixed3.color = Color::Black;
 
+   Rectangle fixed4{ 13, 5, 1.5, 1.5, 5 };
+   fixed4.setFixed(true);
+   fixed4.color = Color::Black;
+
+   Rectangle fixed5{ 5, 8, 1.5, 1.5, 5 };
+   fixed5.setFixed(true);
+   fixed5.color = Color::Black;
+
+   Rectangle fixed6{ 19, 7.5, 1.5, 1.5, 5 };
+   fixed6.setFixed(true);
+   fixed6.color = Color::Black;
+
+   Rectangle fixed7{ 13, 1, 20, 1.5, 5 };
+   fixed7.setFixed(true);
+   fixed7.color = Color::Black;
+
    world.addObject(&circle);
    world.addObject(&circle2);
 
    world.addObject(&fixed);
    world.addObject(&fixed2);
    world.addObject(&fixed3);
+   world.addObject(&fixed4);
+   world.addObject(&fixed5);
+   world.addObject(&fixed6);
+   world.addObject(&fixed7);
    world.start();
 
    keepWindow();
