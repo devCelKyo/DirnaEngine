@@ -28,12 +28,12 @@ World& World::setFrameRate(int val)
 
 World& World::setGravity(double val) { gravity = val; return *this; }
 
-void World::addObject(Object* object)
+void World::addObject(std::unique_ptr<Object> object)
 {
    SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, object->getTextureWidth(), object->getTextureHeight());
    object->texture = texture;
    object->fillTexture(renderer);
-   objects.push_back(object);
+   objects.push_back(std::move(object));
 }
 
 void World::start()
@@ -42,9 +42,9 @@ void World::start()
    {
       clear(renderer);
       applyForces();
-      for (auto* obj : objects)
+      for (auto& obj : objects)
       {
-         drawObject(renderer, obj);
+         drawObject(renderer, obj.get());
       }
 
       int ticks = 50;
@@ -55,7 +55,7 @@ void World::start()
 
       for (int i = 0; i < ticks; ++i)
       {
-         for (auto* obj : objects)
+         for (auto& obj : objects)
          {
             obj->applyAcceleration(tickTime);
             obj->applySpeed(tickTime);
@@ -70,7 +70,7 @@ void World::start()
 
 void World::applyForces()
 {
-   for (auto* obj : objects)
+   for (auto& obj : objects)
    {
       obj->acceleration.y = gravity;
    }
@@ -83,8 +83,8 @@ void World::checkCollisions()
    {
       for (int objIndex2 = objIndex1 + 1; objIndex2 < n; ++objIndex2)
       {
-         auto* obj1 = objects[objIndex1];
-         auto* obj2 = objects[objIndex2];
+         auto* obj1 = objects[objIndex1].get();
+         auto* obj2 = objects[objIndex2].get();
          if (obj1->canCollideWith(obj2))
          {
             obj1->collideWith(obj2);

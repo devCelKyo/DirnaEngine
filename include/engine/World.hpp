@@ -1,8 +1,10 @@
 #pragma once
 
-#include <vector>
 #include <SDL.h>
 #include <engine/Object.hpp>
+
+#include <vector>
+#include <memory>
 
 class World
 {
@@ -17,7 +19,7 @@ public:
    // physics parameters
    World& setGravity(double val);
 
-   void addObject(Object*);
+   void addObject(std::unique_ptr<Object>);
    void start();
 
 private:
@@ -26,7 +28,7 @@ private:
    void checkCollisions();
 
 private:
-   std::vector<Object*> objects;
+   std::vector<std::unique_ptr<Object>> objects;
    SDL_Renderer* renderer;
 
    int width{};
