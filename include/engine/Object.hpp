@@ -26,11 +26,11 @@ public:
    void setFixed(bool val);
    bool isFixed() const;
 
-   double getDistance2InMeters(Object* other);
+   double getDistanceInMeters(Object* other);
 
    // Hitbox circle is a Shape-specific circular hitbox used to quickly evaluate if a collision can occur between two objects
    // Returns squared value to avoid sqrt
-   virtual double getHitboxRadius2() const = 0;
+   virtual double getHitboxRadius() const = 0;
    bool canCollideWith(Object*);
 
    virtual void collideWith(Object*) = 0;
@@ -69,7 +69,7 @@ public:
    int getTextureWidth() const override;
    int getTextureHeight() const override;
 
-   double getHitboxRadius2() const override;
+   double getHitboxRadius() const override;
 
    void collideWith(Object*) override;
    void collideWith(Rectangle*) override;
@@ -90,7 +90,7 @@ public:
    int getTextureWidth() const override;
    int getTextureHeight() const override;
 
-   double getHitboxRadius2() const override;
+   double getHitboxRadius() const override;
 
    void collideWith(Object*) override;
    void collideWith(Rectangle*) override;

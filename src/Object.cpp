@@ -39,17 +39,17 @@ void Object::setFixed(bool val) { fixed = val; }
 
 bool Object::isFixed() const { return fixed; }
 
-double Object::getDistance2InMeters(Object* other)
+double Object::getDistanceInMeters(Object* other)
 {
    double xDiff = x - other->x;
    double yDiff = y - other->y;
-   return xDiff * xDiff + yDiff * yDiff;
+   return std::sqrt(xDiff * xDiff + yDiff * yDiff);
 }
 
 bool Object::canCollideWith(Object* other)
 {
-   const double distance2 = getDistance2InMeters(other);
-   const double radiuses2 = getHitboxRadius2() + other->getHitboxRadius2();
+   const double distance2 = getDistanceInMeters(other);
+   const double radiuses2 = getHitboxRadius() + other->getHitboxRadius();
    
    return distance2 <= radiuses2;
 }
@@ -96,9 +96,9 @@ int Rectangle::getTextureHeight() const
    return metersToPixels(height);
 }
 
-double Rectangle::getHitboxRadius2() const
+double Rectangle::getHitboxRadius() const
 {
-   return (width / 2) * (width / 2) + (height / 2) * (height / 2);
+   return std::sqrt((width / 2) * (width / 2) + (height / 2) * (height / 2));
 }
 
 void Rectangle::collideWith(Object* other)
@@ -173,9 +173,9 @@ int Circle::getTextureHeight() const
    return metersToPixels(radius * 2);
 }
 
-double Circle::getHitboxRadius2() const
+double Circle::getHitboxRadius() const
 {
-   return radius * radius;
+   return radius;
 }
 
 void Circle::collideWith(Object* other)

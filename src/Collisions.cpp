@@ -21,7 +21,36 @@ void collide(Rectangle* rectangle, Circle* circle)
    }
 }
 
-void collide(Circle*, Circle*)
-{}
+static void addMomentum(Object* obj, Vector2D momentum)
+{
+   Vector2D speedToGive = momentum * (1 / obj->mass);
+   obj->speed += speedToGive;
+}
+
+static void withdrawMomentum(Object* obj, Vector2D momentum)
+{
+   Vector2D speedToGive = momentum * (1 / obj->mass);
+   obj->speed += -1 * speedToGive;
+}
+
+void collide(Circle* A, Circle* B)
+{
+   // Vector between the two centers
+   Vector2D AB = {B->x - A->x, B->y - A->y};
+   double distance = AB.getNorm();
+   if (distance <= A->radius + B->radius)
+   {
+      double factorA_to_B = std::abs(AB * A->speed / (AB.getNorm() * A->speed.getNorm()));
+      double factorB_to_A = std::abs((-1 * AB) * B->speed / (AB.getNorm() * B->speed.getNorm()));
+
+      Vector2D A_MomentumToGive = factorA_to_B * A->mass * A->speed;
+      Vector2D B_MomentumToGive = factorB_to_A * B->mass * B->speed;
+
+      withdrawMomentum(A, A_MomentumToGive);
+      withdrawMomentum(B, B_MomentumToGive);
+      addMomentum(A, B_MomentumToGive);
+      addMomentum(B, A_MomentumToGive);
+   }
+}
 
 } // namespace collisions

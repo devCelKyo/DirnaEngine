@@ -22,8 +22,8 @@ int main(int argc, char* args[])
 
    WorldBuilder wb(r, SCREEN_WIDTH, SCREEN_HEIGHT, defaultFrameRate);
    wb.withGravity(9.79)
-      .withCircle({ 12, 3 }, 5, 0.3, { 45, 0 })
-      .withCircle({ 17, 3 }, 5, 0.3, { 11, -2 }, Color::Blue)
+      .withCircle({ 12, 3 }, 5, 1, { 7, 0 })
+      .withCircle({ 17, 3 }, 5, 1, { 3, -2 }, Color::Blue)
       .withRectangle({ 5, 1 }, 5, { 1, 17 }, { 11, -2 }, Color::Black, true)
       .withRectangle({ 20, 1 }, 5, { 1, 17 }, { 11, -2 }, Color::Black, true)
       .withRectangle({ 5, 18 }, 5, { 16, 1 }, { 11, -2 }, Color::Black, true);
