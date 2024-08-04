@@ -38,7 +38,7 @@ void collide(Circle* A, Circle* B)
    // Vector between the two centers
    Vector2D AB = {B->x - A->x, B->y - A->y};
    double distance = AB.getNorm();
-   if (distance <= A->radius + B->radius)
+   if (distance <= 0.97 * (A->radius + B->radius))
    {
       double factorA_to_B = std::abs(AB * A->speed / (AB.getNorm() * A->speed.getNorm()));
       double factorB_to_A = std::abs((-1 * AB) * B->speed / (AB.getNorm() * B->speed.getNorm()));
