@@ -93,7 +93,7 @@ inline void applyRotation(Vector2D& vector, double angle)
 }
 
 // extremely bad implementation TODO make this better
-inline void reflect(Vector2D& lhs, const Vector2D& rhs)
+inline Vector2D reflect(Vector2D lhs, const Vector2D rhs)
 {
    const double dp = lhs * rhs;
    const double cos = dp / (lhs.getNorm() * rhs.getNorm());
@@ -106,4 +106,5 @@ inline void reflect(Vector2D& lhs, const Vector2D& rhs)
       angle = -1 * angle;
    }
    applyRotation(lhs, 2 * angle);
+   return lhs;
 }

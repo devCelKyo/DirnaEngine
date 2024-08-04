@@ -25,9 +25,14 @@ public:
 
    void setFixed(bool val);
    bool isFixed() const;
+   
+   Vector2D getSpeed() const;
+   void setSpeed(Vector2D val);
 
+   Vector2D getAcceleration() const;
+   void setAcceleration(Vector2D val);
+   
    double getDistanceInMeters(Object* other);
-
    // Hitbox circle is a Shape-specific circular hitbox used to quickly evaluate if a collision can occur between two objects
    // Returns squared value to avoid sqrt
    virtual double getHitboxRadius() const = 0;
@@ -47,16 +52,17 @@ public:
    // should be set before filling texture for now
    Color color;
 
-   // vector in meters/s
-   Vector2D speed;
-   // vector in meters/s-2
-   Vector2D acceleration;
-
    SDL_Texture* texture = nullptr;
 protected:
    void updateHandle();
 
    SDL_Rect textureHandle{};
+
+private:
+   // vector in meters/s
+   Vector2D speed;
+   // vector in meters/s-2
+   Vector2D acceleration;
 };
 
 class Rectangle : public Object

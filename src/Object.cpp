@@ -39,6 +39,30 @@ void Object::setFixed(bool val) { fixed = val; }
 
 bool Object::isFixed() const { return fixed; }
 
+Vector2D Object::getSpeed() const
+{
+   return speed;
+}
+
+// TODO make it a World parameter
+constexpr double minimalSpeed = 0.0001;
+
+void Object::setSpeed(Vector2D val)
+{
+   speed.x = std::abs(val.x) >= minimalSpeed ? val.x : 0;
+   speed.y = std::abs(val.y) >= minimalSpeed ? val.y : 0;
+}
+
+Vector2D Object::getAcceleration() const
+{
+   return acceleration;
+}
+
+void Object::setAcceleration(Vector2D val)
+{
+   acceleration = val;
+}
+
 double Object::getDistanceInMeters(Object* other)
 {
    double xDiff = x - other->x;

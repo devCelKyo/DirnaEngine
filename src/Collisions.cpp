@@ -15,7 +15,8 @@ void collide(Rectangle* rectangle, Circle* circle)
       double distance = geometry::getDistance(center, side);
       if (distance <= circle->radius)
       {
-         reflect(circle->speed, side.u);
+         auto reflectedSpeed = reflect(circle->getSpeed(), side.u);
+         circle->setSpeed(0.95 * reflectedSpeed); // Make this a drag coefficient of rectangle
          return;
       }
    }
@@ -24,13 +25,13 @@ void collide(Rectangle* rectangle, Circle* circle)
 static void addMomentum(Object* obj, Vector2D momentum)
 {
    Vector2D speedToGive = momentum * (1 / obj->mass);
-   obj->speed += speedToGive;
+   obj->setSpeed(obj->getSpeed() + speedToGive);
 }
 
 static void withdrawMomentum(Object* obj, Vector2D momentum)
 {
    Vector2D speedToGive = momentum * (1 / obj->mass);
-   obj->speed += -1 * speedToGive;
+   obj->setSpeed(obj->getSpeed() - speedToGive);
 }
 
 void collide(Circle* A, Circle* B)
@@ -38,13 +39,16 @@ void collide(Circle* A, Circle* B)
    // Vector between the two centers
    Vector2D AB = {B->x - A->x, B->y - A->y};
    double distance = AB.getNorm();
-   if (distance <= 0.97 * (A->radius + B->radius))
+   if (distance <= 0.99 * (A->radius + B->radius)) // make sure this makes sense
    {
-      double factorA_to_B = std::abs(AB * A->speed / (AB.getNorm() * A->speed.getNorm()));
-      double factorB_to_A = std::abs((-1 * AB) * B->speed / (AB.getNorm() * B->speed.getNorm()));
+      Vector2D aSpeed = A->getSpeed();
+      Vector2D bSpeed = B->getSpeed();
+      
+      double factorA_to_B = std::max(AB * aSpeed / (AB.getNorm() * aSpeed.getNorm()), 0.);
+      double factorB_to_A = std::max((-1 * AB) * bSpeed / (AB.getNorm() * bSpeed.getNorm()), 0.);
 
-      Vector2D A_MomentumToGive = factorA_to_B * A->mass * A->speed;
-      Vector2D B_MomentumToGive = factorB_to_A * B->mass * B->speed;
+      Vector2D A_MomentumToGive = factorA_to_B * A->mass * aSpeed;
+      Vector2D B_MomentumToGive = factorB_to_A * B->mass * bSpeed;
 
       withdrawMomentum(A, A_MomentumToGive);
       withdrawMomentum(B, B_MomentumToGive);

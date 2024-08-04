@@ -72,7 +72,7 @@ void World::applyForces()
 {
    for (auto& obj : objects)
    {
-      obj->acceleration.y = gravity;
+      obj->setAcceleration({0, gravity });
    }
 }
 

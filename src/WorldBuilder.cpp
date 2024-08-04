@@ -15,7 +15,7 @@ WorldBuilder& WorldBuilder::withGravity(double value)
 WorldBuilder& WorldBuilder::withCircle(Vector2D coordinatesInMeters, double mass, double radius, Vector2D initialSpeed, Color color, bool isFixed)
 {
    auto circle = std::make_unique<Circle>(coordinatesInMeters.x, coordinatesInMeters.y, radius, mass);
-   circle->speed = initialSpeed;
+   circle->setSpeed(initialSpeed);
    circle->color = color;
    circle->setFixed(isFixed);
    world->addObject(std::move(circle));
@@ -28,7 +28,7 @@ WorldBuilder& WorldBuilder::withRectangle(Vector2D coordinatesInMeters, double m
    double centerX = coordinatesInMeters.x + dimensions.x / 2.;
    double centerY = coordinatesInMeters.y + dimensions.y / 2.;
    auto rectangle = std::make_unique<Rectangle>(centerX, centerY, dimensions.x, dimensions.y, mass);
-   rectangle->speed = initialSpeed;
+   rectangle->setSpeed(initialSpeed);
    rectangle->color = color;
    rectangle->setFixed(isFixed);
    world->addObject(std::move(rectangle));
