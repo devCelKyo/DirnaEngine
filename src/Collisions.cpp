@@ -24,7 +24,7 @@ void collide(Rectangle* rectangle, Circle* circle)
          
          // (2) : Regular speed reflection on the collided side
          auto reflectedSpeed = reflect(circle->getSpeed(), side.u);
-         circle->setSpeed(0.98 * reflectedSpeed); // Make this a drag coefficient of rectangle
+         circle->setSpeed(0.6 * reflectedSpeed); // Make this a drag coefficient of rectangle
          return;
       }
    }
