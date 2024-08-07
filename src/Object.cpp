@@ -45,7 +45,7 @@ Vector2D Object::getSpeed() const
 }
 
 // TODO make it a World parameter
-constexpr double minimalSpeed = 0.0001;
+constexpr double minimalSpeed = 0.0000;
 
 void Object::setSpeed(Vector2D val)
 {

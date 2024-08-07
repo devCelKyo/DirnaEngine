@@ -14,6 +14,7 @@ struct Segment
 
 std::array<Segment, 4> getRectangleSides(const Rectangle& rectangle);
 
+Vector2D getOrthogonalProjection(const Vector2D& point, const Segment& segment);
 double getDistance(const Vector2D& point, const Segment& segment);
 
 } // namespace geometry

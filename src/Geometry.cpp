@@ -20,15 +20,22 @@ std::array<Segment, 4> getRectangleSides(const Rectangle& rectangle)
    return sides;
 }
 
-double getDistance(const Vector2D& point, const Segment& segment)
+Vector2D getOrthogonalProjection(const Vector2D& point, const Segment& segment)
 {
    Vector2D AP(segment.a, point);
    double t = (AP * segment.u) / segment.u.getNorm2();
    t = std::min(std::max(0., t), 1.);
    Vector2D projectedPoint = segment.a + segment.u * t;
    Vector2D orthogonalProjectionVector(point, projectedPoint);
-   
-   return orthogonalProjectionVector.getNorm();
+
+   return orthogonalProjectionVector;
 }
+
+double getDistance(const Vector2D& point, const Segment& segment)
+{
+   return getOrthogonalProjection(point, segment).getNorm();
+}
+
+
 
 } // namespace geometry

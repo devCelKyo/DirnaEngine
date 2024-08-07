@@ -13,10 +13,18 @@ void collide(Rectangle* rectangle, Circle* circle)
    {
       Vector2D center(circle->x, circle->y);
       double distance = geometry::getDistance(center, side);
-      if (distance <= circle->radius)
+      if (distance < circle->radius)
       {
+         // (1) : "Undo" the collision, if the objects are "overlapping" - which they are btw - 
+         //       shift the circle following the orthogonal projection
+         //       make it so distance == circle->radius
+         Vector2D normalizedOrthProj = geometry::getOrthogonalProjection(center, side) * (1. / distance);
+         Vector2D shift = (distance - circle->radius) * normalizedOrthProj;
+         circle->move(shift);
+         
+         // (2) : Regular speed reflection on the collided side
          auto reflectedSpeed = reflect(circle->getSpeed(), side.u);
-         circle->setSpeed(0.95 * reflectedSpeed); // Make this a drag coefficient of rectangle
+         circle->setSpeed(0.98 * reflectedSpeed); // Make this a drag coefficient of rectangle
          return;
       }
    }
