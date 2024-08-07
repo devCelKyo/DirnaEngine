@@ -38,9 +38,9 @@ public:
    virtual double getHitboxRadius() const = 0;
    bool canCollideWith(Object*);
 
-   virtual void collideWith(Object*) = 0;
-   virtual void collideWith(Rectangle*) = 0;
-   virtual void collideWith(Circle*) = 0;
+   virtual bool collideWith(Object*) = 0;
+   virtual bool collideWith(Rectangle*) = 0;
+   virtual bool collideWith(Circle*) = 0;
    
 public:
    double mass;
@@ -77,9 +77,9 @@ public:
 
    double getHitboxRadius() const override;
 
-   void collideWith(Object*) override;
-   void collideWith(Rectangle*) override;
-   void collideWith(Circle*) override;
+   bool collideWith(Object*) override;
+   bool collideWith(Rectangle*) override;
+   bool collideWith(Circle*) override;
 
 public:
    double width{}; // in meters
@@ -98,9 +98,9 @@ public:
 
    double getHitboxRadius() const override;
 
-   void collideWith(Object*) override;
-   void collideWith(Rectangle*) override;
-   void collideWith(Circle*) override;
+   bool collideWith(Object*) override;
+   bool collideWith(Rectangle*) override;
+   bool collideWith(Circle*) override;
 
 public:
    double radius{}; // in meters

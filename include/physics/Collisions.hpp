@@ -2,7 +2,7 @@
 #include <engine/Object.hpp>
 
 namespace collisions {
-void collide(Rectangle*, Rectangle*);
-void collide(Rectangle*, Circle*);
-void collide(Circle*, Circle*);
+bool collide(Rectangle*, Rectangle*);
+bool collide(Rectangle*, Circle*);
+bool collide(Circle*, Circle*);
 } // namespace collisions

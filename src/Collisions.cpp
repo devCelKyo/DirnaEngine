@@ -3,10 +3,12 @@
 
 namespace collisions {
 
-void collide(Rectangle*, Rectangle*)
-{}
+bool collide(Rectangle*, Rectangle*)
+{
+   return false;
+}
 
-void collide(Rectangle* rectangle, Circle* circle)
+bool collide(Rectangle* rectangle, Circle* circle)
 {
    auto sides = geometry::getRectangleSides(*rectangle);
    for (const auto& side : sides)
@@ -25,9 +27,10 @@ void collide(Rectangle* rectangle, Circle* circle)
          // (2) : Regular speed reflection on the collided side
          auto reflectedSpeed = reflect(circle->getSpeed(), side.u);
          circle->setSpeed(0.6 * reflectedSpeed); // Make this a drag coefficient of rectangle
-         return;
+         return true;
       }
    }
+   return false;
 }
 
 static void addMomentum(Object* obj, Vector2D momentum)
@@ -42,7 +45,7 @@ static void withdrawMomentum(Object* obj, Vector2D momentum)
    obj->setSpeed(obj->getSpeed() - speedToGive);
 }
 
-void collide(Circle* A, Circle* B)
+bool collide(Circle* A, Circle* B)
 {
    // Vector between the two centers
    Vector2D AB = {B->x - A->x, B->y - A->y};
@@ -62,7 +65,10 @@ void collide(Circle* A, Circle* B)
       withdrawMomentum(B, B_MomentumToGive);
       addMomentum(A, B_MomentumToGive);
       addMomentum(B, A_MomentumToGive);
+
+      return true;
    }
+   return false;
 }
 
 } // namespace collisions

@@ -125,19 +125,19 @@ double Rectangle::getHitboxRadius() const
    return std::sqrt((width / 2) * (width / 2) + (height / 2) * (height / 2));
 }
 
-void Rectangle::collideWith(Object* other)
+bool Rectangle::collideWith(Object* other)
 {
-   other->collideWith(this);
+   return other->collideWith(this);
 }
 
-void Rectangle::collideWith(Rectangle* other)
+bool Rectangle::collideWith(Rectangle* other)
 {
-   collisions::collide(this, other);
+   return collisions::collide(this, other);
 }
 
-void Rectangle::collideWith(Circle* other)
+bool Rectangle::collideWith(Circle* other)
 {
-   collisions::collide(this, other);
+   return collisions::collide(this, other);
 }
 
 Circle::Circle(double x, double y, double radius, double mass)
@@ -202,17 +202,17 @@ double Circle::getHitboxRadius() const
    return radius;
 }
 
-void Circle::collideWith(Object* other)
+bool Circle::collideWith(Object* other)
 {
-   other->collideWith(this);
+   return other->collideWith(this);
 }
 
-void Circle::collideWith(Rectangle* other)
+bool Circle::collideWith(Rectangle* other)
 {
-   collisions::collide(other, this);
+   return collisions::collide(other, this);
 }
 
-void Circle::collideWith(Circle* other)
+bool Circle::collideWith(Circle* other)
 {
-   collisions::collide(this, other);
+   return collisions::collide(this, other);
 }
