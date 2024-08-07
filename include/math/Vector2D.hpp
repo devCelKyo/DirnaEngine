@@ -108,3 +108,9 @@ inline Vector2D reflect(Vector2D lhs, const Vector2D rhs)
    applyRotation(lhs, 2 * angle);
    return lhs;
 }
+
+inline void floor(Vector2D& vect, Vector2D value)
+{
+   vect.x = std::abs(vect.x) > value.x ? vect.x : 0.;
+   vect.y = std::abs(vect.y) > value.y ? vect.y : 0.;
+}

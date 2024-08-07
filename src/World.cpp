@@ -85,9 +85,16 @@ void World::checkCollisions()
       {
          auto* obj1 = objects[objIndex1].get();
          auto* obj2 = objects[objIndex2].get();
+         
+         bool haveCollided = false;
          if (obj1->canCollideWith(obj2))
          {
-            obj1->collideWith(obj2);
+            haveCollided = obj1->collideWith(obj2);
+         }
+
+         if (!haveCollided)
+         {
+            // Remove "support reaction" forces between obj1 and obj2 
          }
       }
    }

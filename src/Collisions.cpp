@@ -14,19 +14,29 @@ bool collide(Rectangle* rectangle, Circle* circle)
    for (const auto& side : sides)
    {
       Vector2D center(circle->x, circle->y);
-      double distance = geometry::getDistance(center, side);
+      Vector2D orthProj = geometry::getOrthogonalProjection(center, side);
+      double distance = orthProj.getNorm();
+      Vector2D normalizedOrthProj = orthProj * (1. / distance);
+      
       if (distance < circle->radius)
       {
+         // (0) : If there are a Force of type SupportReaction between rectangle and circle then no collision handling
+         // if () {...}
+         
+
          // (1) : "Undo" the collision, if the objects are "overlapping" - which they are btw - 
          //       shift the circle following the orthogonal projection
          //       make it so distance == circle->radius
-         Vector2D normalizedOrthProj = geometry::getOrthogonalProjection(center, side) * (1. / distance);
          Vector2D shift = (distance - circle->radius) * normalizedOrthProj;
          circle->move(shift);
          
          // (2) : Regular speed reflection on the collided side
          auto reflectedSpeed = reflect(circle->getSpeed(), side.u);
-         circle->setSpeed(0.6 * reflectedSpeed); // Make this a drag coefficient of rectangle
+         floor(reflectedSpeed, { 0.01, 0.01 });
+         circle->setSpeed(0.6 * reflectedSpeed); // TODO: Make this a drag coefficient of rectangle
+
+         // (3) : If floored, then the circle is fixed on the rectangle, create and add a SupportReaction
+      
          return true;
       }
    }
