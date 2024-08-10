@@ -1,4 +1,5 @@
 #include <engine/World.hpp>
+#include <physics/Force.hpp>
 
 static void clear(SDL_Renderer* renderer)
 {
@@ -33,6 +34,9 @@ void World::addObject(std::unique_ptr<Object> object)
    SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, object->getTextureWidth(), object->getTextureHeight());
    object->texture = texture;
    object->fillTexture(renderer);
+
+   physics::Force gravityForce{ physics::ForceType::Gravity, {0, gravity}, nullptr };
+   object->forces.push_back(gravityForce);
    objects.push_back(std::move(object));
 }
 
