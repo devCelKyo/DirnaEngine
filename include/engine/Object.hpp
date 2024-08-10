@@ -7,6 +7,8 @@
 
 #include <engine/Object.fwd.hpp>
 
+#include <physics/Force.hpp>
+
 class Object
 {
 public:
@@ -53,6 +55,8 @@ public:
    Color color;
 
    SDL_Texture* texture = nullptr;
+
+   std::vector<physics::Force> forces;
 protected:
    void updateHandle();
 

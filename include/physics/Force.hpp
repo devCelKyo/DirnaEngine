@@ -2,6 +2,7 @@
 
 #include <engine/Object.fwd.hpp>
 #include <math/Geometry.hpp>
+#include <vector>
 #include <string>
 
 namespace physics {
