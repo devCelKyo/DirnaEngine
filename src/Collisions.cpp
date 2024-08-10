@@ -32,11 +32,11 @@ bool collide(Rectangle* rectangle, Circle* circle)
          
          // (2) : Regular speed reflection on the collided side
          auto reflectedSpeed = reflect(circle->getSpeed(), side.u);
-         floor(reflectedSpeed, { 0.01, 0.01 });
+         bool floored = floor(reflectedSpeed, { 0.01, 0.01 });
          circle->setSpeed(0.6 * reflectedSpeed); // TODO: Make this a drag coefficient of rectangle
 
          // (3) : If floored, then the circle is fixed on the rectangle, create and add a SupportReaction
-      
+         
          return true;
       }
    }

@@ -109,8 +109,11 @@ inline Vector2D reflect(Vector2D lhs, const Vector2D rhs)
    return lhs;
 }
 
-inline void floor(Vector2D& vect, Vector2D value)
+inline bool floor(Vector2D& vect, Vector2D value)
 {
-   vect.x = std::abs(vect.x) > value.x ? vect.x : 0.;
-   vect.y = std::abs(vect.y) > value.y ? vect.y : 0.;
+   bool flooredX = std::abs(vect.x) > value.x;
+   bool flooredY = std::abs(vect.y) > value.y;
+   vect.x = flooredX ? vect.x : 0.;
+   vect.y = flooredY ? vect.y : 0.;
+   return flooredX or flooredY;
 }
