@@ -1,7 +1,7 @@
 #pragma once
 
 #include <engine/Object.fwd.hpp>
-#include <math/Geometry.hpp>
+#include <math/Vector2D.hpp>
 #include <vector>
 #include <string>
 
@@ -14,7 +14,8 @@ enum class ForceType
    Virtual
 };
 
-struct Force {
+struct Force 
+{
    ForceType type;
    Vector2D value; // in Newton
    
@@ -23,7 +24,8 @@ struct Force {
 
 Force operator+(const Force& lhs, const Force& rhs);
 
-class ForceSet {
+class ForceSet 
+{
 public:
    ForceSet() = default;
    ForceSet(std::vector<Force>);

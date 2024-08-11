@@ -36,7 +36,7 @@ void World::addObject(std::unique_ptr<Object> object)
    object->fillTexture(renderer);
 
    physics::Force gravityForce{ physics::ForceType::Gravity, {0, object->mass * gravity}, nullptr };
-   object->forces.push_back(gravityForce);
+   object->forces.add(gravityForce);
    objects.push_back(std::move(object));
 }
 
