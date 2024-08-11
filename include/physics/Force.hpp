@@ -10,7 +10,8 @@ namespace physics {
 enum class ForceType
 {
    Gravity,
-   SupportReaction
+   SupportReaction,
+   Virtual
 };
 
 struct Force {
@@ -18,6 +19,20 @@ struct Force {
    Vector2D value; // in Newton
    
    Object* sourceObject = nullptr;
+};
+
+Force operator+(const Force& lhs, const Force& rhs);
+
+class ForceSet {
+public:
+   ForceSet() = default;
+   ForceSet(std::vector<Force>);
+
+   void add(Force);
+
+   Force getSum() const;
+private:
+   std::vector<Force> forces;
 };
 
 }

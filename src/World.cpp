@@ -76,12 +76,8 @@ void World::applyForces()
 {
    for (auto& obj : objects)
    {
-      Vector2D sumForceValue;
-      for (const auto& force : obj->forces)
-      {
-         sumForceValue += force.value;
-      }
-      Vector2D acceleration = (1. / obj->mass) * sumForceValue;
+      physics::Force allForces = obj->forces.getSum();
+      Vector2D acceleration = (1. / obj->mass) * allForces.value;
       obj->setAcceleration(acceleration);
    }
 }

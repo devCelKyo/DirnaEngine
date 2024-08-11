@@ -56,7 +56,7 @@ public:
 
    SDL_Texture* texture = nullptr;
 
-   std::vector<physics::Force> forces;
+   physics::ForceSet forces;
 protected:
    void updateHandle();
 
