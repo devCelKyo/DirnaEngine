@@ -33,6 +33,9 @@ public:
    void add(Force);
 
    Force getSum() const;
+   Force getSumByType(ForceType) const;
+
+   const std::vector<Force>& getForces() const;
 private:
    std::vector<Force> forces;
 };

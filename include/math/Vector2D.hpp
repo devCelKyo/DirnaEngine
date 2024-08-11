@@ -106,6 +106,10 @@ inline Vector2D reflect(Vector2D lhs, const Vector2D rhs)
       angle = -1 * angle;
    }
    applyRotation(lhs, 2 * angle);
+   double epsilon = 10e-10;
+   lhs.x = std::abs(lhs.x) > epsilon ? lhs.x : 0.;
+   lhs.y = std::abs(lhs.y) > epsilon ? lhs.y : 0.;
+
    return lhs;
 }
 
@@ -116,4 +120,9 @@ inline bool floor(Vector2D& vect, Vector2D value)
    vect.x = flooredX ? vect.x : 0.;
    vect.y = flooredY ? vect.y : 0.;
    return flooredX or flooredY;
+}
+
+inline Vector2D getNormal(Vector2D vect)
+{
+   return { -vect.y, vect.x };
 }

@@ -30,4 +30,19 @@ Force ForceSet::getSum() const
    return sum;
 }
 
+Force ForceSet::getSumByType(ForceType type) const
+{
+   Force sum;
+   for (const auto& force : forces)
+   {
+      sum = force.type == type ? sum + force : sum;
+   }
+   return sum;
+}
+
+const std::vector<Force>& ForceSet::getForces() const
+{
+   return forces;
+}
+
 } // namespace physics

@@ -45,7 +45,6 @@ void World::start()
    while (true)
    {
       clear(renderer);
-      applyForces();
       for (auto& obj : objects)
       {
          drawObject(renderer, obj.get());
@@ -59,6 +58,7 @@ void World::start()
 
       for (int i = 0; i < ticks; ++i)
       {
+         applyForces();
          for (auto& obj : objects)
          {
             obj->applyAcceleration(tickTime);

@@ -11,6 +11,7 @@ bool collide(Rectangle*, Rectangle*)
 bool collide(Rectangle* rectangle, Circle* circle)
 {
    auto sides = geometry::getRectangleSides(*rectangle);
+   bool hasCollided = false;
    for (const auto& side : sides)
    {
       Vector2D center(circle->x, circle->y);
@@ -20,9 +21,16 @@ bool collide(Rectangle* rectangle, Circle* circle)
       
       if (distance < circle->radius)
       {
-         // (0) : If there are a Force of type SupportReaction between rectangle and circle then no collision handling
-         // if () {...}
-         
+         // (0) : If there are a Force of type SupportReaction between rectangle and circle then no collision handling for this side
+         auto& forcesVector = circle->forces.getForces();
+         for (const auto& force : forcesVector)
+         {
+            if (force.type == physics::ForceType::SupportReaction and force.sourceObject == rectangle)
+            {
+               hasCollided = true;
+               continue;
+            }
+         }
 
          // (1) : "Undo" the collision, if the objects are "overlapping" - which they are btw - 
          //       shift the circle following the orthogonal projection
@@ -32,15 +40,25 @@ bool collide(Rectangle* rectangle, Circle* circle)
          
          // (2) : Regular speed reflection on the collided side
          auto reflectedSpeed = reflect(circle->getSpeed(), side.u);
-         bool floored = floor(reflectedSpeed, { 0.01, 0.01 });
-         circle->setSpeed(0.6 * reflectedSpeed); // TODO: Make this a drag coefficient of rectangle
+         double YreflectedSpeed = reflectedSpeed.y;
+         floor(reflectedSpeed, { 0.01, 0.01 });
+         reflectedSpeed.y *= 0.6; // TODO: Make this a drag coefficient of rectangle
+         circle->setSpeed(reflectedSpeed); 
 
          // (3) : If floored, then the circle is fixed on the rectangle, create and add a SupportReaction
-         
+         if (YreflectedSpeed != 0. && reflectedSpeed.y == 0.)
+         {
+            auto reactionVector = (-1. / side.u.getNorm()) * getNormal(side.u);
+            auto weight = circle->forces.getSumByType(physics::ForceType::Gravity);
+            reactionVector = reactionVector * weight.value.getNorm();
+            physics::Force reaction{ physics::ForceType::SupportReaction, reactionVector, rectangle };
+            circle->forces.add(reaction);
+         }
+
          return true;
       }
    }
-   return false;
+   return hasCollided;
 }
 
 static void addMomentum(Object* obj, Vector2D momentum)
