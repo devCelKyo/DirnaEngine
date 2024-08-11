@@ -19,17 +19,17 @@ bool collide(Rectangle* rectangle, Circle* circle)
       double distance = orthProj.getNorm();
       Vector2D normalizedOrthProj = orthProj * (1. / distance);
       
-      if (distance < circle->radius)
+      if (distance <= circle->radius)
       {
          // (0) : If there are a Force of type SupportReaction between rectangle and circle then no collision handling for this side
-         auto& forcesVector = circle->forces.getForces();
-         for (const auto& force : forcesVector)
-         {
-            if (force.type == physics::ForceType::SupportReaction and force.sourceObject == rectangle)
+         bool hasReaction = circle->forces.contains([&](const physics::Force& force)
             {
-               hasCollided = true;
-               continue;
-            }
+               return (force.type == physics::ForceType::SupportReaction && force.sourceObject == rectangle);
+            });
+         if (hasReaction and not hasCollided)
+         {
+            hasCollided = true;
+            continue;
          }
 
          // (1) : "Undo" the collision, if the objects are "overlapping" - which they are btw - 

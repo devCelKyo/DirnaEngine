@@ -35,9 +35,25 @@ public:
    Force getSum() const;
    Force getSumByType(ForceType) const;
 
-   const std::vector<Force>& getForces() const;
+   std::vector<Force>& getForces();
+
+   template <typename Func>
+   bool contains(Func);
 private:
    std::vector<Force> forces;
 };
+
+template <typename Func>
+bool ForceSet::contains(Func function)
+{
+   for (const auto& force : forces)
+   {
+      if (function(force))
+      {
+         return true;
+      }
+   }
+   return false;
+}
 
 }

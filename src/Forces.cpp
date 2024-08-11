@@ -40,7 +40,7 @@ Force ForceSet::getSumByType(ForceType type) const
    return sum;
 }
 
-const std::vector<Force>& ForceSet::getForces() const
+std::vector<Force>& ForceSet::getForces()
 {
    return forces;
 }
