@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <engine/WorldBuilder.hpp>
+#include <rendering/SDLDisplayer.hpp>
 
 constexpr int SCREEN_WIDTH = 640;
 constexpr int SCREEN_HEIGHT = 480;
@@ -20,7 +21,9 @@ int main(int argc, char* args[])
    SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &w, &r);
    SDL_Delay(500);
 
-   WorldBuilder wb(r, SCREEN_WIDTH, SCREEN_HEIGHT, defaultFrameRate);
+   auto displayer = std::make_unique<rendering::SDLDisplayer>(r);
+
+   WorldBuilder wb(std::move(displayer), SCREEN_WIDTH, SCREEN_HEIGHT, defaultFrameRate);
    wb.withGravity(9.79)
       .withCircle({ 7.5, 6 }, 5, 1, { 4, 0 })
       //.withCircle({ 12, 17 }, 5, 1, { 0, 0 }, Color::Blue)

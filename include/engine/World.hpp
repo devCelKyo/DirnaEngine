@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SDL.h>
 #include <engine/Object.hpp>
+#include <rendering/IDisplayer.hpp>
 
 #include <vector>
 #include <memory>
@@ -9,7 +9,7 @@
 class World
 {
 public:
-   World(SDL_Renderer* renderer);
+   World(std::unique_ptr<rendering::IDisplayer> displayer);
 
    // rendering parameters
    World& setWidth(int val);
@@ -28,8 +28,9 @@ private:
    void checkCollisions();
 
 private:
+   std::unique_ptr<rendering::IDisplayer> displayer;
+
    std::vector<std::unique_ptr<Object>> objects;
-   SDL_Renderer* renderer;
 
    int width{};
    int height{};

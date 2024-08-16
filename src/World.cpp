@@ -1,21 +1,8 @@
 #include <engine/World.hpp>
 #include <physics/Force.hpp>
 
-static void clear(SDL_Renderer* renderer)
-{
-   Uint8 r; Uint8 g; Uint8 b; Uint8 a;
-   SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-   SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-   SDL_RenderClear(renderer);
-   SDL_SetRenderDrawColor(renderer, r, g, b, a);
-}
 
-static void drawObject(SDL_Renderer* renderer, Object* object)
-{
-   SDL_RenderCopy(renderer, object->texture, nullptr, object->getTextureHandle());
-}
-
-World::World(SDL_Renderer* r) : renderer{r}
+World::World(std::unique_ptr<rendering::IDisplayer> displayer) : displayer{ std::move(displayer) }
 {}
 
 World& World::setWidth(int val) { width = val; return *this; }
@@ -31,9 +18,7 @@ World& World::setGravity(double val) { gravity = val; return *this; }
 
 void World::addObject(std::unique_ptr<Object> object)
 {
-   SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, object->getTextureWidth(), object->getTextureHeight());
-   object->texture = texture;
-   object->fillTexture(renderer);
+   displayer->registerObject(object.get());
 
    physics::Force gravityForce{ physics::ForceType::Gravity, {0, object->mass * gravity}, nullptr };
    object->forces.add(gravityForce);
@@ -44,10 +29,10 @@ void World::start()
 {  
    while (true)
    {
-      clear(renderer);
+      displayer->onStartIteration();
       for (auto& obj : objects)
       {
-         drawObject(renderer, obj.get());
+         displayer->drawObject(obj.get());
       }
 
       int ticks = 50;
@@ -67,8 +52,8 @@ void World::start()
          checkCollisions();
       }
 
-      SDL_Delay(frameTimeInterval);
-      SDL_RenderPresent(renderer);
+      displayer->wait(frameTimeInterval);
+      displayer->onEndIteration();
    }
 }
 

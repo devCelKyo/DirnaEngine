@@ -5,7 +5,7 @@
 class WorldBuilder
 {
 public:
-   WorldBuilder(SDL_Renderer* renderer, int widthInPixels, int heightInPixels, int frameRateInFPS);
+   WorldBuilder(std::unique_ptr<rendering::IDisplayer> displayer, int widthInPixels, int heightInPixels, int frameRateInFPS);
 
    WorldBuilder& withGravity(double value);
    

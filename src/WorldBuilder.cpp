@@ -1,8 +1,8 @@
 #include <engine/WorldBuilder.hpp>
 
-WorldBuilder::WorldBuilder(SDL_Renderer* renderer, int widthInPixels, int heightInPixels, int frameRateInFPS)
+WorldBuilder::WorldBuilder(std::unique_ptr<rendering::IDisplayer> displayer, int widthInPixels, int heightInPixels, int frameRateInFPS)
 {
-   world = std::make_unique<World>(renderer);
+   world = std::make_unique<World>(std::move(displayer));
    world->setWidth(widthInPixels).setHeight(heightInPixels).setFrameRate(frameRateInFPS);
 }
 
