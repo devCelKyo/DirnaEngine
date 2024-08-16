@@ -39,21 +39,31 @@ public:
 
    template <typename Func>
    bool contains(Func);
+
+   template <typename Func>
+   void erase(Func);
+
 private:
    std::vector<Force> forces;
 };
 
 template <typename Func>
-bool ForceSet::contains(Func function)
+bool ForceSet::contains(Func predicate)
 {
    for (const auto& force : forces)
    {
-      if (function(force))
+      if (predicate(force))
       {
          return true;
       }
    }
    return false;
+}
+
+template <typename Func>
+void ForceSet::erase(Func predicate)
+{
+   std::erase_if(forces, predicate);
 }
 
 }

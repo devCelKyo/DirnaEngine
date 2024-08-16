@@ -100,16 +100,8 @@ void World::checkCollisions()
 
          if (!haveCollided)
          {
-            auto& forces1 = obj1->forces.getForces();
-            auto& forces2 = obj2->forces.getForces();
-            std::erase_if(forces1, [&](const physics::Force& force)
-               {
-                  return (force.type == physics::ForceType::SupportReaction and force.sourceObject == obj2);
-               });
-            std::erase_if(forces2, [&](const physics::Force& force)
-               {
-                  return (force.type == physics::ForceType::SupportReaction and force.sourceObject == obj1);
-               });
+            obj1->forces.erase([&](const physics::Force& force) { return (force.type == physics::ForceType::SupportReaction and force.sourceObject == obj2); });
+            obj2->forces.erase([&](const physics::Force& force) { return (force.type == physics::ForceType::SupportReaction and force.sourceObject == obj1); });
          }
       }
    }
