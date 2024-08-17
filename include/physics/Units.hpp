@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/Vector2D.hpp>
+
 constexpr double pixelsByMeter = 25;
 
 double pixelsToMeters(int pixels);

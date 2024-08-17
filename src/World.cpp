@@ -1,7 +1,6 @@
 #include <engine/World.hpp>
 #include <physics/Force.hpp>
 
-
 World::World(std::unique_ptr<rendering::IDisplayer> displayer) : displayer{ std::move(displayer) }
 {}
 
@@ -13,13 +12,12 @@ World& World::setFrameRate(int val)
    frameTimeInterval = 1000 / frameRate;
    return *this;
 }
+rendering::IDisplayer* World::getDisplayer() const { return displayer.get(); }
 
 World& World::setGravity(double val) { gravity = val; return *this; }
 
 void World::addObject(std::unique_ptr<Object> object)
 {
-   displayer->registerObject(object.get());
-
    physics::Force gravityForce{ physics::ForceType::Gravity, {0, object->mass * gravity}, nullptr };
    object->forces.add(gravityForce);
    objects.push_back(std::move(object));

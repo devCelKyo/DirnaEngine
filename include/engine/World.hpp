@@ -16,12 +16,14 @@ public:
    World& setHeight(int val);
    World& setFrameRate(int val);
 
+   rendering::IDisplayer* getDisplayer() const;
+
    // physics parameters
    World& setGravity(double val);
 
    void addObject(std::unique_ptr<Object>);
+public:
    void start();
-
 private:
    void applyForces();
 

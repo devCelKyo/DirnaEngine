@@ -18,6 +18,8 @@ WorldBuilder& WorldBuilder::withCircle(Vector2D coordinatesInMeters, double mass
    circle->setSpeed(initialSpeed);
    circle->color = color;
    circle->setFixed(isFixed);
+
+   world->getDisplayer()->registerObject(circle.get());
    world->addObject(std::move(circle));
    return *this;
 }
@@ -31,6 +33,8 @@ WorldBuilder& WorldBuilder::withRectangle(Vector2D coordinatesInMeters, double m
    rectangle->setSpeed(initialSpeed);
    rectangle->color = color;
    rectangle->setFixed(isFixed);
+
+   world->getDisplayer()->registerObject(rectangle.get());
    world->addObject(std::move(rectangle));
    return *this;
 }

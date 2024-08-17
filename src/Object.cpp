@@ -7,9 +7,7 @@ Object::Object(double x, double y, double mass) :
 {}
 
 Object::~Object()
-{
-   SDL_DestroyTexture(texture);
-}
+{}
 
 void Object::move(Vector2D shift)
 {
@@ -78,44 +76,16 @@ bool Object::canCollideWith(Object* other)
    return distance2 <= radiuses2;
 }
 
-void Object::updateHandle()
-{
-   textureHandle.x = metersToPixels(x) - static_cast<int>(getTextureWidth() / 2.);
-   textureHandle.y = metersToPixels(y) - static_cast<int>(getTextureHeight() / 2.);
-}
-
-SDL_Rect* Object::getTextureHandle(bool update)
-{
-   if (update)
-   {
-      updateHandle();
-   }
-   return &textureHandle;
-}
-
 Rectangle::Rectangle(double x, double y, double width, double height, double mass)
    : Base(x, y, mass), width{width}, height{height}
-{
-   textureHandle.w = getTextureWidth();
-   textureHandle.h = getTextureHeight();
-   updateHandle();
-}
+{}
 
-void Rectangle::fillTexture(SDL_Renderer* renderer)
-{
-   auto colorStruct = getColor(color);
-   SDL_SetRenderDrawColor(renderer, colorStruct.r, colorStruct.g, colorStruct.b, colorStruct.a);
-   SDL_SetRenderTarget(renderer, texture);
-   SDL_RenderFillRect(renderer, nullptr);
-   SDL_SetRenderTarget(renderer, nullptr);
-}
-
-int Rectangle::getTextureWidth() const
+int Rectangle::getWrapperWidth() const
 {
    return metersToPixels(width);
 }
 
-int Rectangle::getTextureHeight() const
+int Rectangle::getWrapperHeight() const
 {
    return metersToPixels(height);
 }
@@ -142,57 +112,14 @@ bool Rectangle::collideWith(Circle* other)
 
 Circle::Circle(double x, double y, double radius, double mass)
    : Base(x, y, mass), radius{ radius }
-{
-   textureHandle.w = getTextureWidth();
-   textureHandle.h = getTextureHeight();
-   updateHandle();
-}
+{}
 
-static void drawPointCircleFourSymmetry(SDL_Renderer* renderer, double radius, int x, int y)
-{
-   int twoRadius = static_cast<int>(2 * radius);
-   SDL_RenderDrawPoint(renderer, x, y);
-   SDL_RenderDrawPoint(renderer, twoRadius - x, y);
-   SDL_RenderDrawPoint(renderer, twoRadius - x, twoRadius - y);
-   SDL_RenderDrawPoint(renderer, x, twoRadius - y);
-}
-
-void Circle::fillTexture(SDL_Renderer* renderer)
-{
-   SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-   auto colorStruct = getColor(color);
-   SDL_SetRenderDrawColor(renderer, colorStruct.r, colorStruct.g, colorStruct.b, colorStruct.a);
-   SDL_SetRenderTarget(renderer, texture);
-
-   Uint8 r; Uint8 g; Uint8 b; Uint8 a;
-   SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-   SDL_RenderClear(renderer);
-   SDL_SetRenderDrawColor(renderer, r, g, b, a);
-   
-   const double pixelRadius = metersToPixels(radius);
-   const double squaredRadius = pixelRadius * pixelRadius;
-   for (int i = 0; i <= pixelRadius; ++i)
-   {
-      for (int j = 0; j <= pixelRadius; ++j)
-      {
-         int distX2 = static_cast<int>(std::pow(pixelRadius - i, 2));
-         int distY2 = static_cast<int>(std::pow(pixelRadius - j, 2));
-         if (distX2 + distY2 <= squaredRadius)
-         {
-            drawPointCircleFourSymmetry(renderer, pixelRadius, i, j);
-         }
-      }
-   }
-   SDL_SetRenderTarget(renderer, nullptr);
-}
-
-int Circle::getTextureWidth() const
+int Circle::getWrapperWidth() const
 {
    return metersToPixels(radius * 2);
 }
 
-int Circle::getTextureHeight() const
+int Circle::getWrapperHeight() const
 {
    return metersToPixels(radius * 2);
 }

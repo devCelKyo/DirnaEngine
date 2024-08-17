@@ -26,7 +26,7 @@ int main(int argc, char* args[])
    WorldBuilder wb(std::move(displayer), SCREEN_WIDTH, SCREEN_HEIGHT, defaultFrameRate);
    wb.withGravity(9.79)
       .withCircle({ 7.5, 6 }, 5, 1, { 4, 0 })
-      //.withCircle({ 12, 17 }, 5, 1, { 0, 0 }, Color::Blue)
+      .withCircle({ 12, 17 }, 5, 1, { 0, 0 }, Color::Blue)
       .withRectangle({ 5, 8 }, 5, { 8, 1 }, { 0, 0 }, Color::Black, true)
       .withRectangle({ 5, 1 }, 5, { 1, 17 }, { 0, 0 }, Color::Black, true)
       .withRectangle({ 5, 1 }, 5, { 17, 1 }, { 0, 0 }, Color::Black, true)

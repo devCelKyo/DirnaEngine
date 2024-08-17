@@ -15,12 +15,6 @@ public:
    Object(double x, double y, double mass);
    virtual ~Object();
 
-   virtual void fillTexture(SDL_Renderer*) = 0;
-   SDL_Rect* getTextureHandle(bool update = true);
-
-   virtual int getTextureWidth() const = 0;
-   virtual int getTextureHeight() const = 0;
-
    void move(Vector2D shift);
    void applySpeed(double time); 
    void applyAcceleration(double time); 
@@ -33,10 +27,13 @@ public:
 
    Vector2D getAcceleration() const;
    void setAcceleration(Vector2D val);
-   
+
+   virtual int getWrapperWidth() const = 0;
+   virtual int getWrapperHeight() const = 0;
+
    double getDistanceInMeters(Object* other);
    // Hitbox circle is a Shape-specific circular hitbox used to quickly evaluate if a collision can occur between two objects
-   // Returns squared value to avoid sqrt
+   // Returns squared value to avoid having to evaluate sqrt
    virtual double getHitboxRadius() const = 0;
    bool canCollideWith(Object*);
 
@@ -51,16 +48,9 @@ public:
 
    bool fixed{false};
 
-   // should be set before filling texture for now
    Color color;
 
-   SDL_Texture* texture = nullptr;
-
    physics::ForceSet forces;
-protected:
-   void updateHandle();
-
-   SDL_Rect textureHandle{};
 
 private:
    // vector in meters/s
@@ -75,9 +65,8 @@ class Rectangle : public Object
 public:
    Rectangle(double x, double y, double width, double height, double mass);
 
-   void fillTexture(SDL_Renderer*) override;
-   int getTextureWidth() const override;
-   int getTextureHeight() const override;
+   int getWrapperWidth() const override;
+   int getWrapperHeight() const override;
 
    double getHitboxRadius() const override;
 
@@ -96,9 +85,8 @@ class Circle : public Object
 public:
    Circle(double x, double y, double radius, double mass);
 
-   void fillTexture(SDL_Renderer*) override;
-   int getTextureWidth() const override;
-   int getTextureHeight() const override;
+   int getWrapperWidth() const override;
+   int getWrapperHeight() const override;
 
    double getHitboxRadius() const override;
 
