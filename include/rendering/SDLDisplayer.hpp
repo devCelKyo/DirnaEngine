@@ -24,6 +24,7 @@ class SDLDisplayer : public IDisplayer
 {
 public:
    explicit SDLDisplayer(SDL_Renderer*);
+   ~SDLDisplayer();
 
    void onStartIteration() override;
    void onEndIteration() override;

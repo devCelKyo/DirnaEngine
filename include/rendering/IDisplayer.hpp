@@ -7,6 +7,8 @@ namespace rendering {
 
 class IDisplayer {
 public:
+   virtual ~IDisplayer() = default;
+
    virtual void onStartIteration() = 0;
    virtual void onEndIteration() = 0;
 

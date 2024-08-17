@@ -7,6 +7,14 @@ namespace rendering {
 SDLDisplayer::SDLDisplayer(SDL_Renderer* renderer) : renderer{ renderer }
 {}
 
+SDLDisplayer::~SDLDisplayer()
+{
+   for (auto& entry : textures)
+   {
+      SDL_DestroyTexture(entry.second.texture);
+   }
+}
+
 void SDLDisplayer::onStartIteration()
 {
    Uint8 r; Uint8 g; Uint8 b; Uint8 a;
