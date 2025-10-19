@@ -2,12 +2,14 @@
 #include <engine/WorldBuilder.hpp>
 #include <rendering/SDLDisplayer.hpp>
 
+#include <thread>
+
 constexpr int SCREEN_WIDTH = 640;
 constexpr int SCREEN_HEIGHT = 480;
 
 constexpr int defaultFrameRate = 165;
 
-static void keepWindow()
+static void eventLoop()
 {
    SDL_Event e; bool quit = false; while (quit == false) { while (SDL_PollEvent(&e)) { if (e.type == SDL_QUIT) quit = true; } }
 }
@@ -23,20 +25,25 @@ int main(int argc, char* args[])
 
    auto displayer = std::make_unique<rendering::SDLDisplayer>(r);
 
+   //WorldBuilder wb(std::move(displayer), SCREEN_WIDTH, SCREEN_HEIGHT, defaultFrameRate);
+   //wb.withGravity(9)
+   //   .withCircle({ 7.5, 6 }, 5, 1, { 5, 5 })
+   //   //.withCircle({ 12, 17 }, 5, 1, { 0, 5 }, Color::Blue)
+   //   .withRectangle({ 5, 8 }, 5, { 0, 1 }, { 0, 0 }, Color::Black, true)
+   //   .withRectangle({ 5, 1 }, 5, { 1, 17 }, { 0, 0 }, Color::Black, true)
+   //   .withRectangle({ 5, 1 }, 5, { 17, 1 }, { 0, 0 }, Color::Black, true)
+   //   .withRectangle({ 20, 1 }, 5, { 1, 17 }, { 0, 0 }, Color::Black, true)
+   //   .withRectangle({ 5, 18 }, 5, { 16, 1 }, { 0, 0 }, Color::Black, true);
+
    WorldBuilder wb(std::move(displayer), SCREEN_WIDTH, SCREEN_HEIGHT, defaultFrameRate);
    wb.withGravity(9)
-      .withCircle({ 7.5, 6 }, 5, 1, { 5, 5 })
-      //.withCircle({ 12, 17 }, 5, 1, { 0, 5 }, Color::Blue)
-      .withRectangle({ 5, 8 }, 5, { 0, 1 }, { 0, 0 }, Color::Black, true)
-      .withRectangle({ 5, 1 }, 5, { 1, 17 }, { 0, 0 }, Color::Black, true)
-      .withRectangle({ 5, 1 }, 5, { 17, 1 }, { 0, 0 }, Color::Black, true)
-      .withRectangle({ 20, 1 }, 5, { 1, 17 }, { 0, 0 }, Color::Black, true)
+      .withCircle({ 7.5, 6 }, 5, 1, { 0, 0 })
       .withRectangle({ 5, 18 }, 5, { 16, 1 }, { 0, 0 }, Color::Black, true);
 
    auto world = wb.buildWorld();
-   world->start();
+   std::thread engine(&World::start, world.get());
+   engine.detach();
 
-   keepWindow();
-
+   eventLoop();
    return 0;
 }

@@ -36,7 +36,7 @@ void World::start()
       int ticks = 50;
 
       double timeFactor = 1;
-      double tickTime = frameTimeInterval / (1000 * (double)ticks);
+      double tickTime = frameTimeInterval / (1000. * ticks);
       tickTime *= timeFactor;
 
       for (int i = 0; i < ticks; ++i)

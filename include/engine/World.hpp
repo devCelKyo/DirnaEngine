@@ -22,8 +22,10 @@ public:
    World& setGravity(double val);
 
    void addObject(std::unique_ptr<Object>);
+
 public:
    void start();
+
 private:
    void applyForces();
 
