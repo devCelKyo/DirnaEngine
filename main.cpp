@@ -24,10 +24,10 @@ int main(int argc, char* args[])
    auto displayer = std::make_unique<rendering::SDLDisplayer>(r);
 
    WorldBuilder wb(std::move(displayer), SCREEN_WIDTH, SCREEN_HEIGHT, defaultFrameRate);
-   wb.withGravity(9.79)
-      .withCircle({ 7.5, 6 }, 5, 1, { 4, 0 })
-      .withCircle({ 12, 17 }, 5, 1, { 0, 0 }, Color::Blue)
-      .withRectangle({ 5, 8 }, 5, { 8, 1 }, { 0, 0 }, Color::Black, true)
+   wb.withGravity(9)
+      .withCircle({ 7.5, 6 }, 5, 1, { 5, 5 })
+      //.withCircle({ 12, 17 }, 5, 1, { 0, 5 }, Color::Blue)
+      .withRectangle({ 5, 8 }, 5, { 0, 1 }, { 0, 0 }, Color::Black, true)
       .withRectangle({ 5, 1 }, 5, { 1, 17 }, { 0, 0 }, Color::Black, true)
       .withRectangle({ 5, 1 }, 5, { 17, 1 }, { 0, 0 }, Color::Black, true)
       .withRectangle({ 20, 1 }, 5, { 1, 17 }, { 0, 0 }, Color::Black, true)
